@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"module": "esnext",
+		"moduleResolution": "node",
+		"strict": true,
+		"skipLibCheck": true,
+		"allowSyntheticDefaultImports": true,
+		"experimentalDecorators": true,
+		"target": "es5",
+		"downlevelIteration": true,
+		"jsx": "react",
+		"outDir": "temp"
+	},
+	"include": [
+		"src"
+	]
+}
