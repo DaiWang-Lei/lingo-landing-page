@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import zIndex from '@material-ui/core/styles/zIndex'
 
 export default class Page extends Component<{className?: string, style?: any}> {
   render() {

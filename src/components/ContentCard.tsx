@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import AiSvg from "./AiSvg";
 
 export default class ContentCard extends Component<{ icon: any }> {
   render() {
