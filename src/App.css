@@ -88,3 +88,26 @@ button {
 .bg-gradient-1 {
     background: linear-gradient(173deg, rgba(255,177,145,1) 0%, rgba(255,153,111,1) 49%, rgba(66,147,255,1) 100%) !important;
 }
+
+.bg-gradient-2 {
+    background: linear-gradient(47deg, rgba(255,180,38,1) 0%, rgba(255,75,182,1) 100%);
+}
+.bg-gradient-3 {
+    background: linear-gradient(47deg, rgba(0,227,168,1) 0%, rgba(96,134,235,1) 100%);
+}
+.bg-gradient-4 {
+background: linear-gradient(45deg, rgba(100,78,212,1) 0%, rgb(56, 6, 92) 100%);
+}
+.bg-gradient-5{
+    background: linear-gradient(47deg, rgba(73,160,157,1) 0%, rgba(116,116,191,1) 100%);
+}
+.bg-gradient-6{
+    background: linear-gradient(47deg, rgb(75, 140, 183) 0%, rgb(38, 172, 93) 100%);  
+}
+.bg-gradient-7{
+    background: linear-gradient(47deg, rgba(255,134,144,1) 0%, rgba(237,66,100,1) 100%);
+}
+
+.bg-gradient-8 {
+    background: linear-gradient(47deg, rgba(29,28,51,1) 0%, rgba(40,39,50,1) 100%);
+}

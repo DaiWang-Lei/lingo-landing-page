@@ -779,6 +779,11 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
+"@types/hammerjs@*":
+  version "2.0.36"
+  resolved "https://registry.npm.taobao.org/@types/hammerjs/download/@types/hammerjs-2.0.36.tgz#17ce0a235e9ffbcdcdf5095646b374c2bf615a4c"
+  integrity sha1-F84KI16f+83N9QlWRrN0wr9hWkw=
+
 "@types/minimatch@*":
   version "3.0.3"
   resolved "https://registry.npm.taobao.org/@types/minimatch/download/@types/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
@@ -799,6 +804,14 @@
   resolved "https://registry.npm.taobao.org/@types/react-dom/download/@types/react-dom-16.9.4.tgz?cache=0&sync_timestamp=1573057568068&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Freact-dom%2Fdownload%2F%40types%2Freact-dom-16.9.4.tgz#0b58df09a60961dcb77f62d4f1832427513420df"
   integrity sha1-C1jfCaYJYdy3f2LU8YMkJ1E0IN8=
   dependencies:
+    "@types/react" "*"
+
+"@types/react-hammerjs@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/@types/react-hammerjs/download/@types/react-hammerjs-1.0.1.tgz#f417f0ed5d34452951752198207495955e3e696c"
+  integrity sha1-9Bfw7V00RSlRdSGYIHSVlV4+aWw=
+  dependencies:
+    "@types/hammerjs" "*"
     "@types/react" "*"
 
 "@types/react-transition-group@^4.2.0":
@@ -1014,6 +1027,29 @@ ajv@^6.1.0, ajv@^6.10.2:
     fast-json-stable-stringify "^2.0.0"
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
+
+ambients-math@2, ambients-math@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.npm.taobao.org/ambients-math/download/ambients-math-2.6.1.tgz#06ef188fc51969be4152bf128be3aaa9bc3c3cd6"
+  integrity sha1-Bu8Yj8UZab5BUr8Si+Oqqbw8PNY=
+
+ambients-tween@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.npm.taobao.org/ambients-tween/download/ambients-tween-1.1.3.tgz#e6975a960b30223b7290f3df107b7161892ff153"
+  integrity sha1-5pdalgswIjtykPPfEHtxYYkv8VM=
+  dependencies:
+    ambients-utils "*"
+    rinss-easings "*"
+
+ambients-utils@*, ambients-utils@3:
+  version "3.9.10"
+  resolved "https://registry.npm.taobao.org/ambients-utils/download/ambients-utils-3.9.10.tgz#cef979eadccd469f6beff4f07f673b7bb5a17650"
+  integrity sha1-zvl56tzNRp9r7/Twf2c7e7WhdlA=
+
+ambients-utils@2:
+  version "2.29.4"
+  resolved "https://registry.npm.taobao.org/ambients-utils/download/ambients-utils-2.29.4.tgz#65a26570ca48a17cec1cfc87bf507036235fb6ab"
+  integrity sha1-ZaJlcMpIoXzsHPyHv1BwNiNftqs=
 
 ansi-colors@^3.0.0:
   version "3.2.4"
@@ -2634,6 +2670,16 @@ get-value@^2.0.3, get-value@^2.0.6:
   resolved "https://registry.npm.taobao.org/get-value/download/get-value-2.0.6.tgz#dc15ca1c672387ca76bd37ac0a395ba2042a2c28"
   integrity sha1-3BXKHGcjh8p2vTesCjlbogQqLCg=
 
+gl-mat4@^1.0.1:
+  version "1.2.0"
+  resolved "https://registry.npm.taobao.org/gl-mat4/download/gl-mat4-1.2.0.tgz#49d8a7636b70aa00819216635f4a3fd3f4669b26"
+  integrity sha1-SdinY2twqgCBkhZjX0o/0/RmmyY=
+
+gl-vec3@^1.0.2:
+  version "1.1.3"
+  resolved "https://registry.npm.taobao.org/gl-vec3/download/gl-vec3-1.1.3.tgz#a47c62f918774a06cbed1b65bcd0288ecbb03826"
+  integrity sha1-pHxi+Rh3SgbL7RtlvNAojsuwOCY=
+
 glob-parent@^3.1.0:
   version "3.1.0"
   resolved "https://registry.npm.taobao.org/glob-parent/download/glob-parent-3.1.0.tgz?cache=0&sync_timestamp=1569136652060&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fglob-parent%2Fdownload%2Fglob-parent-3.1.0.tgz#9e6af6299d8d3bd2bd40430832bd113df906c5ae"
@@ -2710,6 +2756,11 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6
   version "4.2.3"
   resolved "https://registry.npm.taobao.org/graceful-fs/download/graceful-fs-4.2.3.tgz#4a12ff1b60376ef09862c2093edd908328be8423"
   integrity sha1-ShL/G2A3bvCYYsIJPt2Qgyi+hCM=
+
+hammerjs@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.npm.taobao.org/hammerjs/download/hammerjs-2.0.8.tgz#04ef77862cff2bb79d30f7692095930222bf60f1"
+  integrity sha1-BO93hiz/K7edMPdpIJWTAiK/YPE=
 
 handle-thing@^2.0.0:
   version "2.0.0"
@@ -3587,6 +3638,14 @@ map-visit@^1.0.0:
   integrity sha1-7Nyo8TFE5mDxtb1B8S80edmN+48=
   dependencies:
     object-visit "^1.0.0"
+
+mat4-decompose@1:
+  version "1.0.4"
+  resolved "https://registry.npm.taobao.org/mat4-decompose/download/mat4-decompose-1.0.4.tgz#65eb4fe39d70878f7a444eb4624d52f7e7eb2faf"
+  integrity sha1-ZetP451wh496RE60Yk1S9+frL68=
+  dependencies:
+    gl-mat4 "^1.0.1"
+    gl-vec3 "^1.0.2"
 
 md5.js@^1.3.4:
   version "1.3.5"
@@ -4663,6 +4722,13 @@ react-easy-state@^6.1.3:
   dependencies:
     "@nx-js/observer-util" "^4.2.2"
 
+react-hammerjs@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/react-hammerjs/download/react-hammerjs-1.0.1.tgz#bc1ed9e9ef7da057163fb169ce12917b6d6ca7d8"
+  integrity sha1-vB7Z6e99oFcWP7FpzhKRe21sp9g=
+  dependencies:
+    hammerjs "^2.0.8"
+
 react-is@^16.7.0, react-is@^16.8.0, react-is@^16.8.1:
   version "16.12.0"
   resolved "https://registry.npm.taobao.org/react-is/download/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
@@ -4888,6 +4954,24 @@ rimraf@^2.5.4, rimraf@^2.6.1, rimraf@^2.6.3:
   integrity sha1-NXl/E6f9rcVmFCwp1PB8ytSD4+w=
   dependencies:
     glob "^7.1.3"
+
+rinss-easings@*, rinss-easings@1:
+  version "1.0.2"
+  resolved "https://registry.npm.taobao.org/rinss-easings/download/rinss-easings-1.0.2.tgz#52a7b7d56e47f0ea13f4a8ed7f775d641a87fdb9"
+  integrity sha1-Uqe31W5H8OoT9Kjtf3ddZBqH/bk=
+  dependencies:
+    ambients-math "2"
+    ambients-utils "3"
+
+rinss@3:
+  version "3.5.9"
+  resolved "https://registry.npm.taobao.org/rinss/download/rinss-3.5.9.tgz#053d13fe7fc45114f034ba0bffaa0fd8c246248b"
+  integrity sha1-BT0T/n/EURTwNLoL/6oP2MJGJIs=
+  dependencies:
+    ambients-math "2"
+    ambients-utils "3"
+    mat4-decompose "1"
+    rinss-easings "1"
 
 ripemd160@^2.0.0, ripemd160@^2.0.1:
   version "2.0.2"
@@ -5522,6 +5606,23 @@ toposort@^1.0.0:
   version "1.0.7"
   resolved "https://registry.npm.taobao.org/toposort/download/toposort-1.0.7.tgz#2e68442d9f64ec720b8cc89e6443ac6caa950029"
   integrity sha1-LmhELZ9k7HILjMieZEOsbKqVACk=
+
+tossable@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.npm.taobao.org/tossable/download/tossable-1.7.0.tgz#b0985f441c4ae0144d1989568f8bb7a153199091"
+  integrity sha1-sJhfRBxK4BRNGYlWj4u3oVMZkJE=
+  dependencies:
+    ambients-utils "2"
+    touchlib "1"
+
+touchlib@1:
+  version "1.7.1"
+  resolved "https://registry.npm.taobao.org/touchlib/download/touchlib-1.7.1.tgz#4a12ee6647d91a41cfd0226c1bc645be22c6bea9"
+  integrity sha1-ShLuZkfZGkHP0CJsG8ZFviLGvqk=
+  dependencies:
+    ambients-math "2"
+    ambients-utils "3"
+    rinss "3"
 
 ts-loader@*:
   version "6.2.1"
