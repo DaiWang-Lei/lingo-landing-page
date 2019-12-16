@@ -2,10 +2,11 @@
 	"name": "lingo-landing-page",
 	"strict": true,
 	"esnext": false,
-	"es2015": false,
-	"es5": true,
+	"es2015": true,
+	"es5": false,
 	"library": false,
 	"node": false,
 	"jsx": true,
-	"css": true
+	"css": true,
+	"3d": true
 }

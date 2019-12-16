@@ -102,6 +102,7 @@ public/
 
 node_modules
 bower_componets
+dist
 
 *.sublime*
 

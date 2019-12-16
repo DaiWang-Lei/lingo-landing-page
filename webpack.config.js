@@ -24,7 +24,7 @@ module.exports = (env, argv) => ({
 												"useBuiltIns": "usage",
 												"corejs": "core-js@3",
 												"targets": {
-													"chrome": "23"
+													"chrome": "49"
 												}
 											}
 										]
@@ -49,7 +49,7 @@ module.exports = (env, argv) => ({
 												"useBuiltIns": "usage",
 												"corejs": "core-js@3",
 												"targets": {
-													"chrome": "23"
+													"chrome": "49"
 												}
 											}
 										]
@@ -125,8 +125,8 @@ module.exports = (env, argv) => ({
 						]
 					},
 					{
-						"test": /\.svg$/i,
-						"loader": "svg-inline-loader"
+						"test": /\.gltf$/i,
+						"loader": "content-loader"
 					},
 					{
 						"loader": "file-loader",
@@ -176,7 +176,7 @@ module.exports = (env, argv) => ({
 	"devServer": {
 		"compress": true,
 		"open": true,
-		"host": "0.0.0.0",
+		"host": "localhost",
 		"port": 3000,
 		"contentBase": path.resolve('./dist'),
 		"https": false,
