@@ -135,3 +135,22 @@ background: linear-gradient(45deg, rgb(100,78,212) 0%, rgb(56, 6, 92) 100%);
 .bg-blur {
     backdrop-filter: blur(10px);
 }
+
+/* .courseCards {
+    margin-left: 28vw;
+} */
+
+/* @media screen and (min-width:640px){
+    .courseCards{
+        margin-left: ;
+    }
+}
+@media screen and (min-width:768px){
+
+}
+@media screen and (min-width:1024px){
+
+}
+@media screen and (min-width:1280px){
+
+} */

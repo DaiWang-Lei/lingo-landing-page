@@ -1,5 +1,5 @@
 import React, { Component, ReactInstance } from "react";
-import { AppBar, Tabs, Tab } from "@material-ui/core";
+import { AppBar, Tabs, Tab, Fab } from "@material-ui/core";
 import { store, view } from "react-easy-state";
 import "tailwindcss/dist/components";
 import "tailwindcss/dist/base";
@@ -17,6 +17,8 @@ import tossable from "tossable";
 import { mapRange } from "@lincode/math";
 import Mountain3D from "./components/Mountain3D";
 import tween from "ambients-tween";
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 const state = store({
   page: 0,
@@ -24,12 +26,15 @@ const state = store({
   stackX: -50,
   bgColor: "none",
   colorBlack: "black",
-  colorWhite: "white"
+  colorWhite: "white",
+
+  currentCard: 0
 });
 
 let page0El: HTMLDivElement | undefined;
 let page1El: HTMLDivElement | undefined;
 let page2El: HTMLDivElement | undefined;
+
 
 window.onscroll = () => {
   state.scrollTop = window.pageYOffset;
@@ -38,7 +43,7 @@ window.onscroll = () => {
   const page2BoundsTop = page2El?.getBoundingClientRect().top ?? Infinity;
 
   let page = 0;
-  
+
   if (page2BoundsTop < window.innerHeight - 300)
     page = 2;
   else if (page1BoundsTop < window.innerHeight - 300)
@@ -99,7 +104,7 @@ const courses = [{
 }, {
   title: "Level 3-4",
   data: [
-    { course: "类型和API", title: "多人吃鸡"  },
+    { course: "类型和API", title: "多人吃鸡" },
     { course: "对接Python", title: "多人吃鸡Python版" },
     { course: "类型和API", title: "在线聊天" },
     { course: "对接Python", title: "在线聊天Python版" }
@@ -135,11 +140,41 @@ export default class App extends Component {
       target: el,
       step: ({ x }) => {
         state.stackX = x - 50
+        state.currentCard = Math.max(Math.floor(x / 40 * -0.8), 0)
       },
       xMin: -160,
       xMax: 0,
-      disableY: true,
       speed: 0.2
+    })
+  }
+
+  // jkj
+  nextCard = () => {
+    // easeInElastic,
+    // easeOutElastic,
+    // easeInOutElastic,
+    // linear,
+    // ease,
+    // easeIn,
+    // easeInOut,
+    // easeOut
+
+    tween({
+      from: state.stackX,
+      to: ((++state.currentCard) + 1) * -52.2,
+      step: val => state.stackX = val,
+      easing: "ease",
+      duration: 500
+    })
+  }
+
+  previousCard = () => {
+    tween({
+      from: state.stackX,
+      to: ((--state.currentCard) + 1) * -52.2,
+      step: val => state.stackX = val,
+      easing: "ease",
+      duration: 500
     })
   }
 
@@ -182,7 +217,7 @@ export default class App extends Component {
           </h2>
 
           <Mountain3D />
-          
+
           <div className="w-full flex justify-center">
             <div style={{ maxWidth: 640, color: state.colorBlack, transition: "all 1000ms ease" }}>
               <ContentCard icon={<GearsSvg />}>
@@ -201,9 +236,9 @@ export default class App extends Component {
         </Page>
 
         <Page
-         className="flex justify-center items-center bg-gradient-9"
-         bgColor={state.bgColor}
-         ref={this.setPage1El}
+          className="flex justify-center items-center bg-gradient-9"
+          bgColor={state.bgColor}
+          ref={this.setPage1El}
         >
           <h2 className="text-3xl sm:text-5xl opacity-75 mb-10 mt-10 text-white text-center font-bold">
             凌高的六大优势
@@ -246,7 +281,7 @@ export default class App extends Component {
               </span>
             </Card>
           </div>
-        </Page> 
+        </Page>
 
         <Page className="bg-white select-none bg-gradient-10" ref={this.setPage2El} bgColor={state.bgColor}>
           <h2 className="text-3xl sm:text-5xl opacity-75 mb-10 mt-10 text-center font-bold" style={{
@@ -255,26 +290,56 @@ export default class App extends Component {
           }}>
             我们的课程体系
           </h2>
-          <div style={{
-            width: "100%",
-            height: 300,
-            perspective: "1000px",
-            transform: "translateX(200px)",
-            background: "transparent"
-            
-          }} ref={this.initTouch}>
-            {courses[0].data.map((c, i) => (
-              <div key={i} style={{
-                position: "absolute",
-                transform: `translate3d(${mapX(state.stackX + i * 50)}px, 0px, ${mapZ(state.stackX) - i * 100}px)`,
-                zIndex: 3
-              }}>
-                <div className="shadow-2xl bg-white" style={{ width: 280, height: 400 }}></div>
+          <div className="flex justify-center w-full">
+            <div style={{ width: 295, height: 400 }}>
+              <div style={{
+                height: 300,
+                perspective: "1000px",
+                perspectiveOrigin: "500% 50%",
+                marginLeft: 85
+
+              }} ref={this.initTouch}>
+                {courses[0].data.map((c, i) => (
+                  <div key={i} style={{
+                    position: "absolute",
+                    transform: `translate3d(${mapX(state.stackX + i * 50)}px, 0px, ${mapZ(state.stackX) - i * 100}px)`,
+                    zIndex: -i //jkj
+                  }}>
+                    <div className="shadow-2xl bg-white" style={{ width: 295, height: 400 }}></div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+            <Fab color="primary" aria-label="add" onClick={this.nextCard} style={{
+              position: "absolute",
+              right: '5%',
+              top: '45%'
+            }}>
+              <ArrowForwardIcon />
+            </Fab>
+            <Fab color="primary" aria-label="add" onClick={this.previousCard}  style={{
+              position: "absolute",
+              left: '5%',
+              top: '45%'
+            }} >
+              <ArrowBackIcon />
+            </Fab>
           </div>
+
         </Page>
       </div>
     );
   }
 }
+
+// import React from 'react'
+
+// export default function App() {
+//   const [stackX, setStackX] = useState(-50);
+
+//   return (
+//     <div onClick={() => setStackX(stackX + 5)}>
+
+//     </div>
+//   )
+// }
