@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useLayoutEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Fab } from "@material-ui/core";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import tween from "ambients-tween";
 import tossable from "tossable";
 import { mapRange } from '@lincode/math';
-
-
 
 function mapX(x: number): number {
   if (x < 0) return x * mapRange(x, 0, -250, 1, 6)
@@ -17,15 +15,13 @@ function mapZ(z: number): number {
   return mapRange(z, -60, -120, 0, 100)
 }
 
-export default function CourseCards(props:any) {
-  
-  
+const CourseCards: React.FC<{ courses: { title: string, data: Array<any> } }> = props => {
   const [stackX, setStackX] = useState(-50)
   const [currentCard, setCurrentCard] = useState(0)
 
   const touchDivRef = useRef<any>();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const handle = tossable({
       target: touchDivRef.current,
       step: ({ x }) => {
@@ -42,27 +38,27 @@ export default function CourseCards(props:any) {
     };
   }, [])
 
-const nextCard = () => {
-  tween({
-    from: stackX,
-    to: (currentCard + 2) * -52.2,
-    step: setStackX,
-    easing: "ease",
-    duration: 500
-  })
-  setCurrentCard(currentCard + 1)
-}
+  const nextCard = () => {
+    tween({
+      from: stackX,
+      to: (currentCard + 2) * -52.2,
+      step: setStackX,
+      easing: "ease",
+      duration: 500
+    })
+    setCurrentCard(currentCard + 1)
+  }
 
-const previousCard = () => {
-  tween({
-    from: stackX,
-    to: currentCard * -52.2,
-    step: setStackX,
-    easing: "ease",
-    duration: 500
-  })
-  setCurrentCard(currentCard - 1)
-}
+  const previousCard = () => {
+    tween({
+      from: stackX,
+      to: currentCard * -52.2,
+      step: setStackX,
+      easing: "ease",
+      duration: 500
+    })
+    setCurrentCard(currentCard - 1)
+  }
 
   return (
     <div className="flex justify-center w-full">
@@ -101,7 +97,5 @@ const previousCard = () => {
       </Fab>
     </div>
   )
-}
-
-
-
+};
+export default CourseCards;

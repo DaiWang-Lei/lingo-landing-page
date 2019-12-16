@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useRef, useEffect } from "react";
 
 import * as player from "@pinyinma/player";
 //@ts-ignore
@@ -10,10 +10,15 @@ import airplaneSrc from "./airplane/scene.gltf";
 //@ts-ignore
 import ipadSrc from "./ipad.jpg";
 
-export default class extends React.Component {
-    private initPlayer = (el: HTMLDivElement | null) => {
-        if (!el) return;
+const Mountain3D: React.FC = () => {
+    const onResize = useCallback((w: number, h: number) => {
+        player.config({ canvasSize: [w, h] });
+    }, []);
 
+    const playerContainerRef = useRef<any>();
+
+    useEffect(() => {
+        const el = playerContainerRef.current;
         player.mount(el);
 
         player.config({
@@ -77,20 +82,18 @@ export default class extends React.Component {
                 }
             }`
         );
-    };
+        return () => {
+            player.dispose();
+        };
+    }, []);
 
-    private onResize = (w: number, h: number) => {
-        player.config({ canvasSize: [w, h] });
-    };
-
-    public render() {
-        return (
-            <div className="w-full flex justify-center" style={{ maxHeight: 1000 }}>
-                <div ref={this.initPlayer} style={{ minWidth: 700 }}>
-                    <ReactResizeDetector handleWidth handleHeight onResize={this.onResize} />
-                    <img src={ipadSrc} className='my-20 sm:my-40' />
-                </div>
+    return (
+        <div className="w-full flex justify-center" style={{ maxHeight: 1000 }}>
+            <div ref={playerContainerRef} style={{ minWidth: 700 }}>
+                <ReactResizeDetector handleWidth handleHeight onResize={onResize} />
+                <img src={ipadSrc} className='my-20 sm:my-40' />
             </div>
-        );
-    }
-}
+        </div>
+    );
+};
+export default Mountain3D;

@@ -821,11 +821,6 @@
     prop-types "^15.7.2"
     react-is "^16.8.0"
 
-"@nx-js/observer-util@^4.2.2":
-  version "4.2.2"
-  resolved "https://registry.npm.taobao.org/@nx-js/observer-util/download/@nx-js/observer-util-4.2.2.tgz#faea1bc61936653486d1b5dec7485220991e628d"
-  integrity sha1-+uobxhk2ZTSG0bXex0hSIJkeYo0=
-
 "@pinyinma/declarations@^1.0.0":
   version "1.0.25"
   resolved "https://registry.yarnpkg.com/@pinyinma/declarations/-/declarations-1.0.25.tgz#1342c320b3f781433fe2a382bb36ba85c71c0611"
@@ -4851,13 +4846,6 @@ react-dom@^16.12.0:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     scheduler "^0.18.0"
-
-react-easy-state@^6.1.3:
-  version "6.1.3"
-  resolved "https://registry.npm.taobao.org/react-easy-state/download/react-easy-state-6.1.3.tgz#f9db4e8d842b5acfb73b6899aaf49a26900f7d26"
-  integrity sha1-+dtOjYQrWs+3O2iZqvSaJpAPfSY=
-  dependencies:
-    "@nx-js/observer-util" "^4.2.2"
 
 react-hammerjs@^1.0.1:
   version "1.0.1"
