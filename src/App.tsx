@@ -114,7 +114,7 @@ const App: React.FC = () => {
         style={{
           backgroundColor: appBarColor,
           color: "black",
-          transition: "all 250ms ease"
+          transition: "background-color 250ms ease"
         }}
       >
         <Tabs
@@ -145,7 +145,7 @@ const App: React.FC = () => {
         <Mountain3D />
 
         <div className="w-full flex justify-center">
-          <div style={{ maxWidth: 640, color: colorBlack, transition: "all 1000ms ease" }}>
+          <div style={{ maxWidth: 640, color: colorBlack, transition: "color 1000ms ease" }}>
             <ContentCard icon={<GearsSvg />}>
               凌高编程是由计算机科学家、天才程序员薛来历经三年潜心钻研，自主研发的编程语言LingoScript和编程平台LingoCode，是面向9-18岁青少年的AI在线编程教育平台。
             </ContentCard>
@@ -212,7 +212,7 @@ const App: React.FC = () => {
       <Page className="bg-white select-none bg-gradient-10" pageRef={page2Ref} bgColor={bgColor}>
         <h2 className="text-3xl sm:text-5xl opacity-75 mb-10 mt-10 text-center font-bold" style={{
           color: colorBlack,
-          transition: "all 1000ms ease"
+          transition: "color 1000ms ease"
         }}>
           我们的课程体系
         </h2>
