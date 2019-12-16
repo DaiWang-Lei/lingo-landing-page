@@ -13,22 +13,18 @@ import GearsSvg from "./components/GearsSvg";
 import AiSvg from "./components/AiSvg";
 import ContentCard from "./components/ContentCard";
 import Card from "./components/Card";
-import tossable from "tossable";
-import { mapRange } from "@lincode/math";
 import Mountain3D from "./components/Mountain3D";
 import tween from "ambients-tween";
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+
+import CourseCards from "./components/CourseCards";
 
 const state = store({
   page: 0,
   scrollTop: 0,
-  stackX: -50,
   bgColor: "none",
   colorBlack: "black",
   colorWhite: "white",
 
-  currentCard: 0
 });
 
 let page0El: HTMLDivElement | undefined;
@@ -68,14 +64,6 @@ window.onscroll = () => {
   }
 };
 
-function mapX(x: number): number {
-  if (x < 0) return x * mapRange(x, 0, -250, 1, 6)
-  return x
-}
-
-function mapZ(z: number): number {
-  return mapRange(z, -60, -120, 0, 100)
-}
 
 function scrollPage(page: number) {
   let top = 0;
@@ -133,52 +121,11 @@ export default class App extends Component {
     page2El = ReactDOM.findDOMNode(component) as any;
   };
 
-  private initTouch = (el: HTMLDivElement | null) => {
-    if (!el) return;
+  
 
-    tossable({
-      target: el,
-      step: ({ x }) => {
-        state.stackX = x - 50
-        state.currentCard = Math.max(Math.floor(x / 40 * -0.8), 0)
-      },
-      xMin: -160,
-      xMax: 0,
-      speed: 0.2
-    })
-  }
-
-  // jkj
-  nextCard = () => {
-    // easeInElastic,
-    // easeOutElastic,
-    // easeInOutElastic,
-    // linear,
-    // ease,
-    // easeIn,
-    // easeInOut,
-    // easeOut
-
-    tween({
-      from: state.stackX,
-      to: ((++state.currentCard) + 1) * -52.2,
-      step: val => state.stackX = val,
-      easing: "ease",
-      duration: 500
-    })
-  }
-
-  previousCard = () => {
-    tween({
-      from: state.stackX,
-      to: ((--state.currentCard) + 1) * -52.2,
-      step: val => state.stackX = val,
-      easing: "ease",
-      duration: 500
-    })
-  }
 
   public render() {
+    
     return (
       <div className="stylefix w-full absolute overflow-hidden">
         <AppBar
@@ -290,56 +237,12 @@ export default class App extends Component {
           }}>
             我们的课程体系
           </h2>
-          <div className="flex justify-center w-full">
-            <div style={{ width: 295, height: 400 }}>
-              <div style={{
-                height: 300,
-                perspective: "1000px",
-                perspectiveOrigin: "500% 50%",
-                marginLeft: 85
-
-              }} ref={this.initTouch}>
-                {courses[0].data.map((c, i) => (
-                  <div key={i} style={{
-                    position: "absolute",
-                    transform: `translate3d(${mapX(state.stackX + i * 50)}px, 0px, ${mapZ(state.stackX) - i * 100}px)`,
-                    zIndex: -i //jkj
-                  }}>
-                    <div className="shadow-2xl bg-white" style={{ width: 295, height: 400 }}></div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <Fab color="primary" aria-label="add" onClick={this.nextCard} style={{
-              position: "absolute",
-              right: '5%',
-              top: '45%'
-            }}>
-              <ArrowForwardIcon />
-            </Fab>
-            <Fab color="primary" aria-label="add" onClick={this.previousCard}  style={{
-              position: "absolute",
-              left: '5%',
-              top: '45%'
-            }} >
-              <ArrowBackIcon />
-            </Fab>
-          </div>
+          <CourseCards courses={courses[0]} />
+          <CourseCards courses={courses[1]} />
+          <CourseCards courses={courses[2]} />
 
         </Page>
       </div>
     );
   }
 }
-
-// import React from 'react'
-
-// export default function App() {
-//   const [stackX, setStackX] = useState(-50);
-
-//   return (
-//     <div onClick={() => setStackX(stackX + 5)}>
-
-//     </div>
-//   )
-// }
