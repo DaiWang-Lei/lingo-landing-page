@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState } from 'react'
 import { Fab } from "@material-ui/core";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import tween from "ambients-tween";
 import tossable from "tossable";
 import { mapRange } from '@lincode/math';
+import { CourseType } from '../App';
+import { useCallback } from 'react';
 
 function mapX(x: number): number {
   if (x < 0) return x * mapRange(x, 0, -250, 1, 6)
@@ -15,15 +17,15 @@ function mapZ(z: number): number {
   return mapRange(z, -60, -120, 0, 100)
 }
 
-const CourseCards: React.FC<{ courses: { title: string, data: Array<any> } }> = props => {
+const CourseCards: React.FC<{ courses: CourseType }> = props => {
   const [stackX, setStackX] = useState(-50)
   const [currentCard, setCurrentCard] = useState(0)
 
-  const touchDivRef = useRef<any>();
+  const initTouch = useCallback((el: HTMLDivElement | null) => {
+    if (!el) return;
 
-  useEffect(() => {
     const handle = tossable({
-      target: touchDivRef.current,
+      target: el,
       step: ({ x }) => {
         setStackX(x - 50)
         setCurrentCard(Math.max(Math.floor(x / 40 * -0.8), 0))
@@ -32,13 +34,9 @@ const CourseCards: React.FC<{ courses: { title: string, data: Array<any> } }> = 
       xMax: 0,
       speed: 0.2
     })
+  }, []);
 
-    return () => {
-      handle.stop();
-    };
-  }, [])
-
-  const nextCard = () => {
+  const nextCard = useCallback(() => {
     tween({
       from: stackX,
       to: (currentCard + 2) * -52.2,
@@ -47,9 +45,9 @@ const CourseCards: React.FC<{ courses: { title: string, data: Array<any> } }> = 
       duration: 500
     })
     setCurrentCard(currentCard + 1)
-  }
+  },[])
 
-  const previousCard = () => {
+  const previousCard = useCallback(() => {
     tween({
       from: stackX,
       to: currentCard * -52.2,
@@ -58,7 +56,7 @@ const CourseCards: React.FC<{ courses: { title: string, data: Array<any> } }> = 
       duration: 500
     })
     setCurrentCard(currentCard - 1)
-  }
+  },[])
 
   return (
     <div className="flex justify-center w-full">
@@ -69,7 +67,7 @@ const CourseCards: React.FC<{ courses: { title: string, data: Array<any> } }> = 
           perspectiveOrigin: "500% 50%",
           marginLeft: 85
 
-        }} ref={touchDivRef}>
+        }} ref={initTouch}>
           {props.courses.data.map((c:any, i:number) => (
             <div key={i} style={{
               position: "absolute",
