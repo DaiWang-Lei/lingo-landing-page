@@ -238,7 +238,17 @@ const App: React.FC = () => {
           color: colorBlack,
           transition: "color 1000ms ease"
         }}>
-          我们的课程体系
+          基础课程体系
+        </h2>
+        <CourseCards courses={courses[0]} />
+      </Page>
+
+      <Page className="bg-white select-none bg-gradient-10" bgColor={bgColor}>
+        <h2 className="text-3xl sm:text-5xl opacity-75 mb-10 mt-10 text-center font-bold" style={{
+          color: colorBlack,
+          transition: "color 1000ms ease"
+        }}>
+          进阶课程体系
         </h2>
         <CourseCards courses={courses[0]} />
       </Page>
