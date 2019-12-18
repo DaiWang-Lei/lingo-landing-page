@@ -1,10 +1,21 @@
 import React from 'react'
 
-const Page: React.FC<{ className?: string, bgColor?: string, pageRef?: React.MutableRefObject<any> }> = props => {
+const Page: React.FC<{
+  className?: string,
+  background?: string,
+  background2?: string,
+  pageRef?: React.MutableRefObject<any>
+
+}> = props => {
+  
   return (
-    <div className={`w-full overflow-hidden ${props.className ?? ""}`} ref={props.pageRef}>
+    <div className={`w-full overflow-hidden ${props.className ?? ""}`} ref={props.pageRef} style={{ 
+      background: props.background2 ?? "none",
+      backgroundSize: "cover",
+     }}>
       <div className="w-full flex justify-center pt-20" style={{
-        backgroundColor: props.bgColor ?? "none",
+        background: props.background ?? "none",
+        backgroundSize: "cover",
         transition: "background-color 1000ms ease",
         minHeight: "100vh"
       }}>

@@ -30,7 +30,7 @@ const CourseCards: React.FC<{ courses: CourseType }> = props => {
         setStackX(x - 50)
         setCurrentCard(Math.max(Math.floor(x / 40 * -0.8), 0))
       },
-      xMin: -160,
+      xMin: -372.5,
       xMax: 0,
       speed: 0.2
     })

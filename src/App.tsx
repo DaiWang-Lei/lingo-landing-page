@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useCallback, useState } from "react";
-import { AppBar, Tabs, Tab } from "@material-ui/core";
+import { AppBar, Tabs, Tab, Toolbar } from "@material-ui/core";
 import "tailwindcss/dist/components";
 import "tailwindcss/dist/base";
 import "tailwindcss/dist/utilities";
@@ -8,23 +8,19 @@ import "./App.css";
 import "plyr/dist/plyr.css";
 //@ts-ignore
 import Plyr from "plyr";
-import Page from "./components/Page";
-import RobotSvg from "./components/RobotSvg";
-import GearsSvg from "./components/GearsSvg";
-import AiSvg from "./components/AiSvg";
-import ContentCard from "./components/ContentCard";
-import Card from "./components/Card";
-import Mountain3D from "./components/Mountain3D";
 import tween from "ambients-tween";
-import CourseCards from "./components/CourseCards";
-//@ts-ignore
-import CandySrc from './assets/candy.jpg'
-//@ts-ignore
-import XuelaiSrc from './assets/xuelai.jpg'
-//@ts-ignore
-import Li from './assets/li.jpg'
+
 //@ts-ignore
 import videoSrc from "./assets/1.mp4";
+//@ts-ignore
+import logoSrc from "./assets/logo.png";
+import Title from "./pages/Title";
+import WhyChooseUs from "./pages/WhyChooseUs";
+import Founders from "./pages/Founders";
+import CoreCourses from "./pages/CoreCourses";
+import Advancedourses from "./pages/AdvancedCourses";
+import CoursePreview from "./pages/CoursePreview";
+import WhyCode from "./pages/WhyCode";
 
 const course = {
   title: "Level 1-2",
@@ -39,23 +35,19 @@ const course = {
 export type CourseType = typeof course;
 
 const courses = [{
-  title: "Level 1-2",
+  title: "核心进阶课程LEVEL1-LEVEL4",
   data: [
     { course: "变量和函数", title: "太空堡垒" },
     { course: "流程控制", title: "愤怒小鸟" },
     { course: "变量和函数", title: "计算器" },
-    { course: "流程控制", title: "单位换算" }
-  ]
-}, {
-  title: "Level 3-4",
-  data: [
+    { course: "流程控制", title: "单位换算" },
     { course: "类型和API", title: "多人吃鸡" },
     { course: "对接Python", title: "多人吃鸡Python版" },
     { course: "类型和API", title: "在线聊天" },
     { course: "对接Python", title: "在线聊天Python版" }
   ]
 }, {
-  title: "进阶课程",
+  title: "高级应用课程ADVANCE 1- ADVANCE 5",
   data: [
     { course: "人工智能", title: "姿态识别，人脸识别，算法写歌，算法写诗" },
     { course: "机器人与物联网", title: "寻线小车，机器手臂，遥控开关" },
@@ -70,17 +62,18 @@ const App: React.FC = () => {
   const [colorBlack, setColorBlack] = useState("black");
   const [appBarColor, setAppBarColor] = useState("transparent");
 
-  const page0Ref = useRef<any>();
-  const page1Ref = useRef<any>();
-  const page2Ref = useRef<any>();
+  const titleRef = useRef<any>();
+  const whyCodeRef = useRef<any>();
+  const whyChooseUsRef = useRef<any>();
+  const coreCoursesRef = useRef<any>();
 
   const scrollPage = useCallback((page: number) => {
     let top = 0;
 
     if (page === 1)
-      top = page0Ref.current.clientHeight;
+      top = titleRef.current.clientHeight;
     else if (page === 2)
-      top = page0Ref.current.clientHeight + page1Ref.current.clientHeight;
+      top = titleRef.current.clientHeight + whyChooseUsRef.current.clientHeight;
 
     tween({
       from: window.pageYOffset,
@@ -96,15 +89,20 @@ const App: React.FC = () => {
     const scrollCb = () => {
       setAppBarColor(window.pageYOffset > 0 ? "rgba(255,255,255,0.5)" : "transparent");
 
-      const page1BoundsTop = page1Ref.current.getBoundingClientRect().top;
-      const page2BoundsTop = page2Ref.current.getBoundingClientRect().top;
+      const whyChooseUsTop = whyChooseUsRef.current.getBoundingClientRect().top;
+      const whyCodeTop = whyCodeRef.current.getBoundingClientRect().top;
+      const coreCoursesTop = coreCoursesRef.current.getBoundingClientRect().top;
 
-      let page = 0;
+      let page: number;
 
-      if (page2BoundsTop < window.innerHeight - 300)
+      if (coreCoursesTop < window.innerHeight)
+        page = 3;
+      else if (whyChooseUsTop < window.innerHeight)
         page = 2;
-      else if (page1BoundsTop < window.innerHeight - 300)
+      else if (whyCodeTop < window.innerHeight)
         page = 1;
+      else
+        page = 0;
 
       setPage(page);
 
@@ -116,7 +114,7 @@ const App: React.FC = () => {
         setBgColor("rgba(29,28,51)");
         setColorBlack("white");
       }
-      else if (page === 2) {
+      else if (page === 3) {
         setBgColor("white");
         setColorBlack("black");
       }
@@ -141,161 +139,45 @@ const App: React.FC = () => {
           transition: "background-color 250ms ease"
         }}
       >
-        <Tabs
-          value={page}
-          onChange={(ev, val) => scrollPage(val)}
-        >
-          <Tab label="凌高编程" />
-          <Tab label="六大优势" />
-          <Tab label="课程体系" />
-        </Tabs>
-      </AppBar>
-
-      {/* 第一页 */}
-      <Page className="bg-gradient-1" bgColor={bgColor} pageRef={page0Ref}>
-        <div className="mt-32 sm:mt-32" />
-        <h1 className="text-4xl sm:text-6xl text-center font-bold opacity-75 mb-3">
-          凌高编程
-        </h1>
-        <h2 className="text-xl sm:text-5xl opacity-75 mb-10 text-center">
-          <span className="inline-block whitespace-no-wrap">
-            最适合中国青少年的
-          </span>
-          <span className="inline-block whitespace-no-wrap">
-            AI在线编程平台
-          </span>
-        </h2>
-
-        <Mountain3D />
-
         <div className="w-full flex justify-center">
-          <div style={{ maxWidth: 640, color: colorBlack, transition: "color 1000ms ease" }}>
-            <ContentCard icon={<GearsSvg />}>
-              凌高编程是由计算机科学家、天才程序员薛来历经三年潜心钻研，自主研发的编程语言LingoScript和编程平台LingoCode，是面向9-18岁青少年的AI在线编程教育平台。
-            </ContentCard>
-
-            <ContentCard icon={<AiSvg />}>
-              核心技术全球首创利用拼音作为编程入门工具，使用Ambient AI辅助教学，降低中国学生的学习门槛，用智慧的解决方案和适合中国人的硬核科技，帮助中国青少年快速掌握编程。
-            </ContentCard>
-
-            <ContentCard icon={<RobotSvg />}>
-              更有独立开发独一无二的高级应用课程，AR与空间编程，AI算法入门，智能机器人等，培养更多的青少年创客创造未来。
-            </ContentCard>
-          </div>
-        </div>
-      </Page>
-
-      <Page
-        className="flex justify-center items-center bg-gradient-9"
-        bgColor={bgColor}
-        pageRef={page1Ref}
-      >
-        <h2 className="text-3xl sm:text-5xl opacity-75 mb-10 mt-10 text-white text-center font-bold">
-          凌高的六大优势
-        </h2>
-        <div className="flex flex-wrap">
-          <Card className="bg-gradient-2">
-            <p className="text-xl font-bold mb-3">拼音编程降低学习门槛</p>
-            <span className="opacity-75">
-              中国青少年学习编程最大的障碍是记不住复杂的英文指令，凌高编程全球首创拼音编程，基于现代汉语,更接近自然语言，降低中国学生的学习门槛；
-            </span>
-          </Card>
-          <Card className="bg-gradient-3 ">
-            <p className="text-xl font-bold mb-3">天才程序员独家秘方</p>
-            <span className="opacity-75">
-              中国青少年学习编程最大的障碍是记不住复杂的英文指令，凌高编程全球首创拼音编程，基于现代汉语,更接近自然语言，降低中国学生的学习门槛；
-            </span>
-          </Card>
-          <Card className="bg-gradient-4">
-            <p className="text-xl font-bold mb-3">快速学成，所见即所得</p>
-            <span className="opacity-75">
-              中国青少年学习编程最大的障碍是记不住复杂的英文指令，凌高编程全球首创拼音编程，基于现代汉语,更接近自然语言，降低中国学生的学习门槛；
-            </span>
-          </Card>
-          <Card className="bg-gradient-5">
-            <p className="text-xl font-bold mb-3">实用性大于理论性</p>
-            <span className="opacity-75">
-              中国青少年学习编程最大的障碍是记不住复杂的英文指令，凌高编程全球首创拼音编程，基于现代汉语,更接近自然语言，降低中国学生的学习门槛；
-            </span>
-          </Card>
-          <Card className="bg-gradient-7">
-            <p className="text-xl font-bold mb-3">网上授课，时间灵活</p>
-            <span className="opacity-75">
-              中国青少年学习编程最大的障碍是记不住复杂的英文指令，凌高编程全球首创拼音编程，基于现代汉语,更接近自然语言，降低中国学生的学习门槛；
-            </span>
-          </Card>
-          <Card className="bg-gradient-6">
-            <p className="text-xl font-bold mb-3">Hello World</p>
-            <span className="opacity-75">
-              中国青少年学习编程最大的障碍是记不住复杂的英文指令，凌高编程全球首创拼音编程，基于现代汉语,更接近自然语言，降低中国学生的学习门槛；
-            </span>
-          </Card>
-        </div>
-      </Page>
-
-      <Page className="bg-white select-none bg-gradient-10" pageRef={page2Ref} bgColor={bgColor}>
-        <h2 className="text-3xl sm:text-5xl opacity-75 mb-10 mt-10 text-center font-bold" style={{
-          color: colorBlack,
-          transition: "color 1000ms ease"
-        }}>
-          基础课程体系
-        </h2>
-        <CourseCards courses={courses[0]} />
-      </Page>
-
-      <Page className="bg-white select-none bg-gradient-10" bgColor={bgColor}>
-        <h2 className="text-3xl sm:text-5xl opacity-75 mb-10 mt-10 text-center font-bold" style={{
-          color: colorBlack,
-          transition: "color 1000ms ease"
-        }}>
-          进阶课程体系
-        </h2>
-        <CourseCards courses={courses[0]} />
-      </Page>
-
-      {/* 实例展示 */}
-      <Page className='bg-blue-300'>
-        <video src={videoSrc} id="player" controls />
-      </Page>
-
-      {/* 创始人页面 */}
-      <Page className="bg-black  ">
-        <div className="md:flex bg-white rounded-lg p-6 m-6">
-          <img className="h-16 w-16 md:h-24 md:w-24 rounded-full mx-auto md:mx-0 md:mr-6" src={XuelaiSrc} />
-          <div className="text-center md:text-left">
-            <h2 className="text-lg">薛来</h2>
-            <div className="text-purple-500">CTO & 联合创始人</div>
-            <div className="text-gray-600">曾就读卡耐基梅隆大学计算机专业
-    （已辍学）</div>
-            <div className="text-gray-600">2011-2012年就职于英特尔亚太研发中心系统优化工程师</div>
-            <div className="text-gray-600">2013年在新加坡创立Rativ科技公司，研发AR人机交互系统</div>
-            <div className="text-gray-600">2016年起研发Lingo编程语言和平台</div>
-          </div>
+          <Toolbar variant="dense" style={{ maxWidth: 1000 }}>
+            {/* <div style={{ height: 48, width: 80 }}>
+              <img src={logoSrc} height="100%" />
+            </div>
+            <div className="flex-grow" /> */}
+            <Tabs
+              value={page}
+              onChange={(ev, val) => scrollPage(val)}
+            >
+              <Tab label="凌高编程" />
+              <Tab label="六大优势" />
+              <Tab label="课程体系" />
+              <Tab label="课程预览" />
+              <Tab label="创始团队" />
+            </Tabs>
+          </Toolbar>
         </div>
 
-        <div className="md:flex bg-white rounded-lg p-6 m-6">
-          <img className="h-16 w-16 md:h-24 md:w-24 rounded-full mx-auto md:mx-0 md:mr-6" src={Li} />
-          <div className="text-center md:text-left">
-            <h2 className="text-lg">Hyunki LEE李贤基</h2>
-            <div className="text-purple-500">产品总监</div>
-            <div className="text-gray-600">就读于佐治亚理工大学航天工程硕士</div>
-            <div className="text-gray-600">2013年就职于Rativ科技公司产品经理一职</div>
-            <div className="text-gray-600">佐治亚理工大学航天工程设计实验室(Aerospace Systems Design Laboratory )研究员</div>
-          </div>
-        </div>
+      </AppBar>
+      {/* 第一页  */}
+      <Title pageRef={titleRef} bgColor={bgColor} />
 
-        <div className="md:flex bg-white rounded-lg p-6 m-6">
-          <img className="h-16 w-16 md:h-24 md:w-24 rounded-full mx-auto md:mx-0 md:mr-6" src={CandySrc} />
-          <div className="text-center md:text-left">
-            <h2 className="text-lg">Candy LIU刘乐</h2>
-            <div className="text-purple-500">CEO & 联合创始人</div>
-            <div className="text-gray-600">就读于牛津大学赛德商学院EMBA</div>
-            <div className="text-gray-600">拥有超过12年的市场营销经验，曾在LVMH集团、Pepsi、L'Oréal等500强外企担任高级市场经理职位</div>
-            <div className="text-gray-600">擅长品牌策略、整合品牌营销等，
-     成功上线’Pepsi Challenge’等品牌活动</div>
-          </div>
-        </div>
-      </Page>
+      <WhyCode pageRef={whyCodeRef} bgColor={bgColor} />
+
+      {/* 为什么选择我们 */}
+      <WhyChooseUs bgColor={bgColor} pageRef={whyChooseUsRef} />
+
+      {/* 核心课程 */}
+      <CoreCourses courses={courses[0]} colorBlack={colorBlack} pageRef={coreCoursesRef} bgColor={bgColor} />
+
+      {/* 高级课程 */}
+      <Advancedourses bgColor={bgColor} colorBlack={colorBlack} courses={courses[1]} />
+
+      {/* 课程展示 */}
+      <CoursePreview videoSrc={videoSrc} />
+
+      {/* 创始人 */}
+      <Founders />
     </div>
   );
 };
