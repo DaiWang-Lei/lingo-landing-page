@@ -1,5 +1,6 @@
 import React from 'react';
 import { useMemo } from 'react';
+import { useCallback } from 'react';
 
 type Column = { key: string, angle: number };
 
@@ -10,17 +11,16 @@ const data = [
 ];
 
 const captionMap: Record<string, string> = {
-  curiosity: "激发旺盛的好奇心",
-  focus: "保持持续的专注力",
-  discipline: "训练纯粹的自驱力",
-  logic: "锻炼严谨的逻辑思维能力",
-  problemSolving: "培养整理信息、解决问题的能力"
+  curiosity: "好奇心",
+  focus: "专注力",
+  discipline: "自驱力",
+  logic: "逻辑思维",
+  problemSolving: "解决问题"
 };
 
-const chartSize = 640;
 const numberOfScales = 4;
 
-const scale = (value: number) => (
+const scale = (value: number, chartSize: number) => (
   <circle
     key={`scale-${value}`}
     cx={0}
@@ -46,7 +46,7 @@ const pathDefinition = (points: Array<Array<number>>) => {
 const colors = ["#284fff", "#934ce5", "#c3b803"];
 let currentColor = 0;
 
-const shape = (columns: Array<Column>) => (chartData: any, i: number) => {
+const shape = (columns: Array<Column>, chartSize: number) => (chartData: any, i: number) => {
   const data = chartData;
 
   const color = useMemo(() => colors[currentColor++], []);
@@ -77,7 +77,7 @@ const points = (points: Array<Array<number>>) => {
     .join(' ');
 };
 
-const axis = (col: Column, i: number) => (
+const axis = (chartSize: number) => (col: Column, i: number) => (
   <polyline
     key={`poly-axis-${i}`}
     points={points([
@@ -89,35 +89,42 @@ const axis = (col: Column, i: number) => (
   />
 );
 
-const caption = (col: Column) => (
-  <text
-   key={`caption-of-${col.key}`}
-   x={polarToX(col.angle, chartSize / 2).toFixed(4)}
-   y={polarToY(col.angle, chartSize / 2 * 1.15).toFixed(4)}
-   fill="#FFF"
-   fontWeight="bold"
-   fontSize="20px"
-   ref={el => {
-     if (el) el.setAttribute("dx", -el.clientWidth / 2 + "px");
-   }}
-  >
-    {captionMap[col.key]}
-  </text>
-);
+const caption = (chartSize: number) => (col: Column) => {
+  const setDX = useCallback((el: SVGTextElement | null) => {
+    if (!el) return;
 
-const RadarChart: React.FC = () => {
+    const bounds = el.getBoundingClientRect();
+    el.setAttribute("dx", (-bounds.width / 2) + "px");
+
+  }, []);
+
+  return (
+    <text
+      key={`caption-of-${col.key}`}
+      x={polarToX(col.angle, chartSize / 2).toFixed(4)}
+      y={polarToY(col.angle, chartSize / 2 * 1.15).toFixed(4)}
+      fill="#FFF"
+      fontWeight="bold"
+      fontSize="20px"
+      ref={setDX}
+    >
+      {captionMap[col.key]}
+    </text>
+  )
+};
+
+const RadarChart: React.FC<{ chartSize: number, padding: number, style?: React.CSSProperties }> = props => {
   const groups = [];
   const scales = [];
 
   for (let i = numberOfScales; i > 0; i--)
-    scales.push(scale(i));
+    scales.push(scale(i, props.chartSize));
 
   groups.push(<g key={`scales`}>{scales}</g>);
 
-  const padding = 200;
-  const middleOfChart = ((chartSize + padding) / 2).toFixed(4);
+  const middleOfChart = ((props.chartSize + props.padding) / 2).toFixed(4);
   const captions = Object.keys(data[0]);
-  
+
   const columns = captions.map((key, i, all) => {
     return {
       key,
@@ -125,17 +132,18 @@ const RadarChart: React.FC = () => {
     } as Column;
   });
 
-  groups.push(<g key={`group-axes`}>{columns.map(axis)}</g>);
-  groups.push(<g key={`groups}`}>{data.map(shape(columns))}</g>);
-  groups.push(<g key={`group-captions`}>{columns.map(caption)}</g>);
+  groups.push(<g key={`group-axes`}>{columns.map(axis(props.chartSize))}</g>);
+  groups.push(<g key={`groups}`}>{data.map(shape(columns, props.chartSize))}</g>);
+  groups.push(<g key={`group-captions`}>{columns.map(caption(props.chartSize))}</g>);
 
   return (
     <svg
-     version="1"
-     xmlns="http://www.w3.org/2000/svg"
-     width={chartSize}
-     height={chartSize}
-     viewBox={`0 0 ${chartSize + padding} ${chartSize + padding}`}
+      version="1"
+      xmlns="http://www.w3.org/2000/svg"
+      width={props.chartSize}
+      height={props.chartSize}
+      viewBox={`0 0 ${props.chartSize + props.padding} ${props.chartSize + props.padding}`}
+      style={props.style}
     >
       <g transform={`translate(${middleOfChart},${middleOfChart})`}>
         {groups}

@@ -21,6 +21,7 @@ import CoreCourses from "./pages/CoreCourses";
 import Advancedourses from "./pages/AdvancedCourses";
 import CoursePreview from "./pages/CoursePreview";
 import WhyCode from "./pages/WhyCode";
+import AppBarNav from "./components/AppBarNav";
 
 const course = {
   title: "Level 1-2",
@@ -127,36 +128,8 @@ const App: React.FC = () => {
 
   return (
     <div className="stylefix w-full absolute overflow-hidden">
-      <AppBar
-        position="fixed"
-        elevation={0}
-        className="px-10 sm:px-15 md:px-20 bg-blur"
-        style={{
-          backgroundColor: appBarColor,
-          color: "black",
-          transition: "background-color 250ms ease"
-        }}
-      >
-        <div className="w-full flex justify-center">
-          <Toolbar variant="dense" style={{ maxWidth: 1000 }}>
-            {/* <div style={{ height: 48, width: 80 }}>
-              <img src={logoSrc} height="100%" />
-            </div>
-            <div className="flex-grow" /> */}
-            <Tabs
-             value={page}
-             onChange={(ev, val) => scrollPage(val)}
-            >
-              <Tab label="凌高编程" />
-              <Tab label="Why 编程？" />
-              <Tab label="课程体系" />
-              <Tab label="课程预览" />
-              <Tab label="创始团队" />
-            </Tabs>
-          </Toolbar>
-        </div>
 
-      </AppBar>
+      <AppBarNav page={page} scrollPage={scrollPage} appBarColor={appBarColor} />
       {/* 第一页  */}
       <Title pageRef={titleRef} bgColor={bgColor} />
 
