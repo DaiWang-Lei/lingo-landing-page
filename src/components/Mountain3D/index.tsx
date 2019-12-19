@@ -88,10 +88,10 @@ const Mountain3D: React.FC = () => {
     }, []);
 
     return (
-        <div className="w-full flex justify-center" style={{ maxHeight: 1000 }}>
+        <div className="w-full flex justify-center">
             <div ref={playerContainerRef} style={{ minWidth: 700 }}>
                 <ReactResizeDetector handleWidth handleHeight onResize={onResize} />
-                <img src={ipadSrc} className='my-20 sm:my-40' />
+                <img src={ipadSrc} className="mt-40 sm:mt-64" style={{ transform: "translateY(-10%)" }} />
             </div>
         </div>
     );

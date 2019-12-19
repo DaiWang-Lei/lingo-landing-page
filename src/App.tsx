@@ -15,7 +15,7 @@ import videoSrc from "./assets/1.mp4";
 //@ts-ignore
 import logoSrc from "./assets/logo.png";
 import Title from "./pages/Title";
-import WhyChooseUs from "./pages/WhyChooseUs";
+import WhyUs from "./pages/WhyUs";
 import Founders from "./pages/Founders";
 import CoreCourses from "./pages/CoreCourses";
 import Advancedourses from "./pages/AdvancedCourses";
@@ -59,7 +59,7 @@ const courses = [{
 const App: React.FC = () => {
   const [page, setPage] = useState(0);
   const [bgColor, setBgColor] = useState("none");
-  const [colorBlack, setColorBlack] = useState("black");
+  const [textColor, setTextColor] = useState("black");
   const [appBarColor, setAppBarColor] = useState("transparent");
 
   const titleRef = useRef<any>();
@@ -93,30 +93,28 @@ const App: React.FC = () => {
       const whyCodeTop = whyCodeRef.current.getBoundingClientRect().top;
       const coreCoursesTop = coreCoursesRef.current.getBoundingClientRect().top;
 
-      let page: number;
+      let page = 0;
 
-      if (coreCoursesTop < window.innerHeight)
+      if (coreCoursesTop < window.innerHeight - 300)
         page = 3;
-      else if (whyChooseUsTop < window.innerHeight)
+      else if (whyChooseUsTop < window.innerHeight - 300)
         page = 2;
-      else if (whyCodeTop < window.innerHeight)
+      else if (whyCodeTop < window.innerHeight - 300)
         page = 1;
-      else
-        page = 0;
 
       setPage(page);
 
       if (page === 0) {
         setBgColor("transparent");
-        setColorBlack("black");
+        setTextColor("black");
       }
-      else if (page === 1) {
-        setBgColor("rgba(29,28,51)");
-        setColorBlack("white");
+      else if (page === 1 || page === 2) {
+        setBgColor("rgb(29,28,51)");
+        setTextColor("white");
       }
       else if (page === 3) {
         setBgColor("white");
-        setColorBlack("black");
+        setTextColor("black");
       }
     };
 
@@ -146,11 +144,11 @@ const App: React.FC = () => {
             </div>
             <div className="flex-grow" /> */}
             <Tabs
-              value={page}
-              onChange={(ev, val) => scrollPage(val)}
+             value={page}
+             onChange={(ev, val) => scrollPage(val)}
             >
               <Tab label="凌高编程" />
-              <Tab label="六大优势" />
+              <Tab label="Why 编程？" />
               <Tab label="课程体系" />
               <Tab label="课程预览" />
               <Tab label="创始团队" />
@@ -162,16 +160,16 @@ const App: React.FC = () => {
       {/* 第一页  */}
       <Title pageRef={titleRef} bgColor={bgColor} />
 
-      <WhyCode pageRef={whyCodeRef} bgColor={bgColor} />
+      <WhyCode pageRef={whyCodeRef} bgColor={bgColor} textColor={textColor} />
 
       {/* 为什么选择我们 */}
-      <WhyChooseUs bgColor={bgColor} pageRef={whyChooseUsRef} />
+      <WhyUs bgColor={bgColor} pageRef={whyChooseUsRef} />
 
       {/* 核心课程 */}
-      <CoreCourses courses={courses[0]} colorBlack={colorBlack} pageRef={coreCoursesRef} bgColor={bgColor} />
+      <CoreCourses courses={courses[0]} textColor={textColor} pageRef={coreCoursesRef} bgColor={bgColor} />
 
       {/* 高级课程 */}
-      <Advancedourses bgColor={bgColor} colorBlack={colorBlack} courses={courses[1]} />
+      <Advancedourses bgColor={bgColor} textColor={textColor} courses={courses[1]} />
 
       {/* 课程展示 */}
       <CoursePreview videoSrc={videoSrc} />

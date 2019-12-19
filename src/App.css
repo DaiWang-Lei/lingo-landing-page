@@ -93,14 +93,6 @@ button {
 
 /* 自定义样式 2019-12-11 */
 
-.bg-gradient-0 {
-    background: linear-gradient(to right, #b6fbff, #83a4d4) !important;
-}
-
-.bg-gradient-1 {
-    background: linear-gradient(180deg, rgb(255,177,145) 0%, rgb(255,153,111) 49%, rgb(66,147,255) 100%) !important;
-}
-
 .bg-gradient-2 {
     background: linear-gradient(45deg, rgb(255,180,38) 0%, rgb(255,75,182) 100%);
 }
@@ -108,7 +100,7 @@ button {
     background: linear-gradient(45deg, rgb(0,227,168) 0%, rgb(96,134,235) 100%);
 }
 .bg-gradient-4 {
-background: linear-gradient(45deg, rgb(100,78,212) 0%, rgb(56, 6, 92) 100%);
+    background: linear-gradient(45deg, rgb(100,78,212) 0%, rgb(56, 6, 92) 100%);
 }
 .bg-gradient-5{
     background: linear-gradient(45deg, rgb(73,160,157) 0%, rgb(116,116,191) 100%);
@@ -122,14 +114,6 @@ background: linear-gradient(45deg, rgb(100,78,212) 0%, rgb(56, 6, 92) 100%);
 
 .bg-gradient-8 {
     background: linear-gradient(45deg, rgb(29,28,51) 0%, rgb(40,39,50) 100%);
-}
-
-.bg-gradient-9 {
-    background: linear-gradient(180deg, rgba(66,147,255) 0%, rgb(47, 107, 185) 100%);
-}
-
-.bg-gradient-10 {
-    background: linear-gradient(180deg, rgb(47, 107, 185) 0%, rgb(255, 255, 255) 100%);
 }
 
 .bg-blur {
