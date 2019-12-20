@@ -3,18 +3,18 @@ import { AppBar, Tabs, Toolbar, Tab, IconButton } from '@material-ui/core'
 import useWindowWidth from '../hooks/useWindowWidth'
 import MenuIcon from '@material-ui/icons/Menu';
 
-const AppBarNav: React.FC<{ appBarColor: any, scrollPage: any, page: any }> = (props) => {
+const AppBarNav: React.FC<{ appBarColor: string, textColor: string, scrollPage: any, page: number }> = (props) => {
   const windowWidth = useWindowWidth();
 
   return (
     <AppBar
       position="fixed"
       elevation={0}
-      className="px-10 sm:px-15 md:px-20 bg-blur"
+      className="px-10 sm:px-15 md:px-20"
       style={{
         backgroundColor: props.appBarColor,
-        color: "black",
-        transition: "background-color 250ms ease"
+        color: props.textColor,
+        transition: "all 250ms ease"
       }}
     >
       <div className="w-full flex justify-center">

@@ -1,5 +1,4 @@
-import React, { useRef, useEffect, useCallback, useState } from "react";
-import { AppBar, Tabs, Tab, Toolbar } from "@material-ui/core";
+import React, { useEffect, useState, createRef } from "react";
 import "tailwindcss/dist/components";
 import "tailwindcss/dist/base";
 import "tailwindcss/dist/utilities";
@@ -12,16 +11,16 @@ import tween from "ambients-tween";
 
 //@ts-ignore
 import videoSrc from "./assets/1.mp4";
-//@ts-ignore
-import logoSrc from "./assets/logo.png";
 import Title from "./pages/Title";
 import WhyUs from "./pages/WhyUs";
 import Founders from "./pages/Founders";
 import CoreCourses from "./pages/CoreCourses";
-import Advancedourses from "./pages/AdvancedCourses";
+import AdvancedCourses from "./pages/AdvancedCourses";
 import CoursePreview from "./pages/CoursePreview";
 import WhyCode from "./pages/WhyCode";
 import AppBarNav from "./components/AppBarNav";
+import VisibilityDetector from "./components/VisibilityDetecor";
+import useZeroScrollTop from "./hooks/useZeroScrollTop";
 
 const course = {
   title: "Level 1-2",
@@ -57,98 +56,101 @@ const courses = [{
   ]
 }];
 
+const titleRef = createRef<any>();
+const whyCodeRef = createRef<any>();
+const whyChooseUsRef = createRef<any>();
+const coreCoursesRef = createRef<any>();
+const coursePreviewRef = createRef<any>();
+const foundersRef = createRef<any>();
+
+function scrollPage(tabIndex: number) {
+  let top = 0;
+
+  if (tabIndex === 1)
+    top = whyCodeRef.current.offsetTop
+  else if (tabIndex === 2)
+    top = coreCoursesRef.current.offsetTop
+  else if (tabIndex === 3)
+    top = coursePreviewRef.current.offsetTop;
+  else if (tabIndex === 4)
+    top = foundersRef.current.offsetTop;
+
+  tween({
+    from: window.pageYOffset,
+    to: top,
+    step: val => window.scrollTo(0, val),
+    duration: 1000
+  });
+};
+
+let tabIndex = 0;
+const visiblePagesSet = new Set<number>();
+
 const App: React.FC = () => {
-  const [page, setPage] = useState(0);
-  const [bgColor, setBgColor] = useState("none");
-  const [textColor, setTextColor] = useState("black");
-  const [appBarColor, setAppBarColor] = useState("transparent");
+  const [visiblePages, setVisiblePages] = useState([] as Array<number>);
 
-  const titleRef = useRef<any>();
-  const whyCodeRef = useRef<any>();
-  const whyChooseUsRef = useRef<any>();
-  const coreCoursesRef = useRef<any>();
+  const page = visiblePages.sort().pop();
 
-  const scrollPage = useCallback((page: number) => {
-    let top = 0;
+  if (page === 0)
+    tabIndex = 0;
+  else if (page === 1 || page === 2)
+    tabIndex = 1;
+  else if (page === 3 || page === 4)
+    tabIndex = 2;
+  else if (page === 5)
+    tabIndex = 3;
+  else if (page === 6)
+    tabIndex = 4;
 
-    if (page === 1)
-      top = titleRef.current.clientHeight;
-    else if (page === 2)
-      top = titleRef.current.clientHeight + whyChooseUsRef.current.clientHeight;
+  let bgColor = "transparent";
+  let textColor = "black";
+  let appBarColor = "rgba(255, 255, 255, 0.9)";
 
-    tween({
-      from: window.pageYOffset,
-      to: top,
-      step: val => window.scrollTo(0, val),
-      duration: 1000
-    });
-  }, []);
+  if (useZeroScrollTop())
+    appBarColor = "transparent";
+
+  if (tabIndex === 1) {
+    bgColor = "rgb(29,28,51)";
+    textColor = "white";
+    appBarColor = "rgba(0, 0, 0, 0.75)";
+  }
+  else if (tabIndex === 2 || tabIndex === 3) {
+    bgColor = "white";
+    textColor = "black";
+    appBarColor = "rgba(255, 255, 255, 0.75)";
+  }
 
   useEffect(() => {
-    const player = new Plyr('#player');
-
-    const scrollCb = () => {
-      setAppBarColor(window.pageYOffset > 0 ? "rgba(255,255,255,0.5)" : "transparent");
-
-      const whyChooseUsTop = whyChooseUsRef.current.getBoundingClientRect().top;
-      const whyCodeTop = whyCodeRef.current.getBoundingClientRect().top;
-      const coreCoursesTop = coreCoursesRef.current.getBoundingClientRect().top;
-
-      let page = 0;
-
-      if (coreCoursesTop < window.innerHeight - 300)
-        page = 3;
-      else if (whyChooseUsTop < window.innerHeight - 300)
-        page = 2;
-      else if (whyCodeTop < window.innerHeight - 300)
-        page = 1;
-
-      setPage(page);
-
-      if (page === 0) {
-        setBgColor("transparent");
-        setTextColor("black");
-      }
-      else if (page === 1 || page === 2) {
-        setBgColor("rgb(29,28,51)");
-        setTextColor("white");
-      }
-      else if (page === 3) {
-        setBgColor("white");
-        setTextColor("black");
-      }
-    };
-
-    window.addEventListener("scroll", scrollCb);
-
-    return () => {
-      window.removeEventListener("scroll", scrollCb);
-    };
+    new Plyr('#player');
   }, []);
 
   return (
     <div className="stylefix w-full absolute overflow-hidden">
 
-      <AppBarNav page={page} scrollPage={scrollPage} appBarColor={appBarColor} />
-      {/* 第一页  */}
-      <Title pageRef={titleRef} bgColor={bgColor} />
+      <AppBarNav page={tabIndex} scrollPage={scrollPage} appBarColor={appBarColor} textColor={textColor} />
 
-      <WhyCode pageRef={whyCodeRef} bgColor={bgColor} textColor={textColor} />
+      {[
+        <Title pageRef={titleRef} bgColor={bgColor} />,
+        <WhyCode pageRef={whyCodeRef} bgColor={bgColor} textColor={textColor} />,
+        <WhyUs bgColor={bgColor} pageRef={whyChooseUsRef} />,
+        <CoreCourses courses={courses[0]} textColor={textColor} pageRef={coreCoursesRef} bgColor={bgColor} />,
+        <AdvancedCourses courses={courses[1]} textColor={textColor} bgColor={bgColor} />,
+        <CoursePreview videoSrc={videoSrc} pageRef={coursePreviewRef} />,
+        <Founders pageRef={foundersRef} />
 
-      {/* 为什么选择我们 */}
-      <WhyUs bgColor={bgColor} pageRef={whyChooseUsRef} />
+      ].map((PageComponent, i) => (
+        
+        <VisibilityDetector key={i} topOffset={300} onChange={visible => {
+          if (visible)
+            visiblePagesSet.add(i);
+          else
+            visiblePagesSet.delete(i);
 
-      {/* 核心课程 */}
-      <CoreCourses courses={courses[0]} textColor={textColor} pageRef={coreCoursesRef} bgColor={bgColor} />
-
-      {/* 高级课程 */}
-      <Advancedourses bgColor={bgColor} textColor={textColor} courses={courses[1]} />
-
-      {/* 课程展示 */}
-      <CoursePreview videoSrc={videoSrc} />
-
-      {/* 创始人 */}
-      <Founders />
+          setVisiblePages([...visiblePagesSet])
+        }}>
+          {PageComponent}
+        </VisibilityDetector>
+      ))}
     </div>
   );
 };

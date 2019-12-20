@@ -7,9 +7,9 @@ import XuelaiSrc from '../assets/xuelai.jpg'
 //@ts-ignore
 import Li from '../assets/li.jpg'
 
-const Founders: React.FC = () => {
+const Founders: React.FC<{ pageRef: any }> = (props) => {
   return (
-    <Page className="bg-black">
+    <Page className="bg-black" pageRef={props.pageRef}>
       <div className="md:flex bg-white rounded-lg p-6 m-6">
         <img className="h-16 w-16 md:h-24 md:w-24 rounded-full mx-auto md:mx-0 md:mr-6" src={XuelaiSrc} />
         <div className="text-center md:text-left">

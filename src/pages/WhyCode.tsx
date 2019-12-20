@@ -5,8 +5,8 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { useRef } from 'react'
 import { withStyles, lighten, LinearProgress } from '@material-ui/core';
-import tween from "ambients-tween";
-import Visibility from '../components/Visibility'
+// import tween from "ambients-tween";
+// import VisibilityDetector from '../components/VisibilityDetecor'
 
 const WhyCode: React.FC<{ pageRef: any, bgColor: string, textColor: string }> = props => {
   const [chartSize, setChartSize] = useState(300);
@@ -49,28 +49,31 @@ const WhyCode: React.FC<{ pageRef: any, bgColor: string, textColor: string }> = 
     },
   })(LinearProgress);
 
-  const onProgress1Visible = useCallback(() => {
-    tween({
-      from: 0, to: 65, duration: 2000,
-      step: setP0
-    })
-    tween({
-      from: 0, to: 70, duration: 2000,
-      step: setP1
-    })
-    tween({
-      from: 0, to: 70, duration: 2000,
-      step: setP2
-    })
-    tween({
-      from: 0, to: 90, duration: 2000,
-      step: setP3
-    })
-    tween({
-      from: 0, to: 85, duration: 2000,
-      step: setP4
-    })
-  }, []);
+  // const onProgress1Visible = useCallback((isVisible: boolean) => {
+  //   if (!isVisible)
+  //     return;
+
+  //   tween({
+  //     from: 0, to: 65, duration: 2000,
+  //     step: setP0
+  //   })
+  //   tween({
+  //     from: 0, to: 70, duration: 2000,
+  //     step: setP1
+  //   })
+  //   tween({
+  //     from: 0, to: 70, duration: 2000,
+  //     step: setP2
+  //   })
+  //   tween({
+  //     from: 0, to: 90, duration: 2000,
+  //     step: setP3
+  //   })
+  //   tween({
+  //     from: 0, to: 85, duration: 2000,
+  //     step: setP4
+  //   })
+  // }, []);
 
   return (
     <Page
@@ -84,18 +87,18 @@ const WhyCode: React.FC<{ pageRef: any, bgColor: string, textColor: string }> = 
             color: props.textColor,
             transition: "color 1000ms ease"
           }}>
-            为什么要编程
+            为什么要学习编程
           </h2>
           
           <div className="flex items-center text-white mb-2 opacity-50">
             <div style={{ width: longestWidth }} className="text-right">
               激发旺盛的好奇心
             </div>
-            <Visibility onVisible={onProgress1Visible}>
+            {/* <VisibilityDetector onChange={onProgress1Visible}> */}
               <div className="flex-grow pl-3">
                 <BorderLinearProgress variant="determinate" value={p0} />
               </div>
-            </Visibility>
+            {/* </VisibilityDetector> */}
           </div>
 
           <div className="flex items-center text-white mb-2 opacity-50">

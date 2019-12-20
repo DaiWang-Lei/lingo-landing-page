@@ -10,7 +10,7 @@ const WhyUs: React.FC<{bgColor:any,pageRef:any}> = props => {
     background2="linear-gradient(180deg, rgb(29,28,51) 0%, rgb(255,255,255) 100%)"
     pageRef={props.pageRef}
     >
-      <h2 className="text-3xl sm:text-5xl opacity-75 mb-10 mt-10 text-white text-center font-bold">
+      <h2 className="text-3xl sm:text-5xl opacity-75 mb-10 text-white text-center font-bold">
         为什么选择凌高编程？
       </h2>
       <div className="flex flex-wrap">
