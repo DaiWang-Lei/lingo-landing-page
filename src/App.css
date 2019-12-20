@@ -90,6 +90,9 @@ button {
     z-index: auto !important;
 }
 
+.absolute {
+    position: absolute !important;
+}
 
 /* 自定义样式 2019-12-11 */
 
@@ -114,6 +117,10 @@ button {
 
 .bg-gradient-8 {
     background: linear-gradient(45deg, rgb(29,28,51) 0%, rgb(40,39,50) 100%);
+}
+
+.bg-gradient-9 {
+    background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
 }
 
 .bg-blur {

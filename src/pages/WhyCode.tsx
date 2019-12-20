@@ -103,7 +103,7 @@ const WhyCode: React.FC<{ pageRef: any, bgColor: string, textColor: string }> = 
 
           <div className="flex items-center text-white mb-2 opacity-50">
             <div style={{ width: longestWidth }} className="text-right">
-              保持持续的专注力
+              培养持续的专注力
             </div>
             <div className="flex-grow pl-3">
               <BorderLinearProgress variant="determinate" value={p1} />
