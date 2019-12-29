@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const Page: React.FC<{
   className?: string,
@@ -6,25 +6,32 @@ const Page: React.FC<{
   background2?: string,
   pageRef?: React.MutableRefObject<any>,
   insert?: any,
-  onClick?: () => void
+  onClick?: () => void,
+  useFooter?: boolean,
+  useHeader?: boolean
 
 }> = props => {
   
   return (
-    <div className={`w-full ${props.className ?? ""}`} ref={props.pageRef} onClick={props.onClick} style={{ 
+    <div
+     className={`w-full select-none ${props.className ?? ""}`}
+     ref={props.pageRef}
+     onClick={props.onClick}
+     style={{ 
       background: props.background2 ?? "none",
       backgroundSize: "cover",
       backgroundPosition: "center"
      }}>
       {props.insert}
-      <div className="w-full flex justify-center pt-20" style={{
+      <div className="w-full transition-1000 change-opacity py-32" style={{
         background: props.background ?? "none",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        transition: "background-color 1000ms ease",
-        minHeight: "100vh"
+        minHeight: "100vh",
+        paddingBottom: props.useFooter ? 0 : undefined,
+        paddingTop: props.useHeader ? 0 : undefined
       }}>
-        <div className='container px-10 sm:px-15 md:px-20'>
+        <div className='container px-10 sm:px-15 md:px-20 mx-auto'>
           {props.children}
         </div>
       </div>

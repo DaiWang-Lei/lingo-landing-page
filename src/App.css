@@ -21,21 +21,21 @@ button {
 }
 
 .full {
-    width: 100%;
-    height: 100%;
+    width: 100% !important;
+    height: 100% !important;
 }
 
 .center {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translateX(-50%) translateY(-50%);
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translateX(-50%) translateY(-50%) !important;
 }
 
 .center-y {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
 }
 
 .bg-black-025 {
@@ -94,35 +94,46 @@ button {
     position: absolute !important;
 }
 
-/* 自定义样式 2019-12-11 */
-
-.bg-gradient-2 {
-    background: linear-gradient(45deg, rgb(255,180,38) 0%, rgb(255,75,182) 100%);
-}
-.bg-gradient-3 {
-    background: linear-gradient(45deg, rgb(0,227,168) 0%, rgb(96,134,235) 100%);
-}
-.bg-gradient-4 {
-    background: linear-gradient(45deg, rgb(100,78,212) 0%, rgb(56, 6, 92) 100%);
-}
-.bg-gradient-5{
-    background: linear-gradient(45deg, rgb(73,160,157) 0%, rgb(116,116,191) 100%);
-}
-.bg-gradient-6{
-    background: linear-gradient(45deg, rgb(75, 140, 183) 0%, rgb(38, 172, 93) 100%);  
-}
-.bg-gradient-7{
-    background: linear-gradient(45deg, rgb(255,134,144) 0%, rgb(237,66,100) 100%);
+.change-transform {
+    will-change: transform !important;
 }
 
-.bg-gradient-8 {
-    background: linear-gradient(45deg, rgb(29,28,51) 0%, rgb(40,39,50) 100%);
+.change-opacity {
+    will-change: opacity !important;
 }
 
-.bg-gradient-9 {
-    background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+.change-transform .change-opacity {
+    will-change: opacity, transform !important;
+}
+
+.change-opacity .change-transform {
+    will-change: opacity, transform !important;
+}
+
+.transition-250 {
+    transition: all 250ms ease !important;
+}
+
+.transition-500 {
+    transition: all 500ms ease !important;
+}
+
+.transition-1000 {
+    transition: all 1000ms ease !important;
+}
+
+.bg-cover {
+    background-size: cover !important;
+}
+
+.bg-center {
+    background-position: center !important;
 }
 
 .bg-blur {
     backdrop-filter: blur(10px);
+}
+
+body {
+    will-change: scroll-position !important;
 }

@@ -5,20 +5,21 @@ import { useCallback } from 'react';
 type Column = { key: string, angle: number };
 
 const data = [
-  { curiosity: 1.0, focus: 1.0, problemSolving: 0.6, discipline: 0.5, logic: 0.6 },
-  { curiosity: 0.7, focus: 0.8, problemSolving: 1.0, discipline: 0.8, logic: 1.0 },
-  { curiosity: 0.6, focus: 1.0, problemSolving: 0.5, discipline: 1.0, logic: 0.5 }
+  { curiosity: 1.0, focus: 1.0, problemSolving: 0.6, discipline: 0.5, logic: 0.6, expression: 0.7 },
+  { curiosity: 0.7, focus: 0.8, problemSolving: 1.0, discipline: 0.8, logic: 1.0, expression: 0.6 },
+  { curiosity: 0.6, focus: 0.7, problemSolving: 0.5, discipline: 1.0, logic: 0.5, expression: 1.0 }
 ];
 
 const captionMap: Record<string, string> = {
   curiosity: "好奇心",
-  focus: "专注力",
-  discipline: "自驱力",
+  focus: "专注度",
+  discipline: "执行力",
   logic: "逻辑思维",
-  problemSolving: "解决问题"
+  problemSolving: "解决问题",
+  expression: "表达力"
 };
 
-const numberOfScales = 4;
+const numberOfScales = 5;
 
 const scale = (value: number, chartSize: number) => (
   <circle
@@ -27,8 +28,7 @@ const scale = (value: number, chartSize: number) => (
     cy={0}
     r={((value / numberOfScales) * chartSize) / 2}
     fill="transparent"
-    stroke="#999"
-    strokeWidth="0.2"
+    stroke="rgba(255,255,255,0.25)"
   />
 );
 
@@ -47,8 +47,6 @@ const colors = ["#284fff", "#934ce5", "#c3b803"];
 let currentColor = 0;
 
 const shape = (columns: Array<Column>, chartSize: number) => (chartData: any, i: number) => {
-  const data = chartData;
-
   const color = useMemo(() => colors[currentColor++], []);
 
   return (
@@ -56,7 +54,7 @@ const shape = (columns: Array<Column>, chartSize: number) => (chartData: any, i:
       key={`shape-${i}`}
       d={pathDefinition(
         columns.map(col => {
-          const value = data[col.key];
+          const value = chartData[col.key];
           return [
             polarToX(col.angle, (value * chartSize) / 2),
             polarToY(col.angle, (value * chartSize) / 2)
@@ -84,8 +82,7 @@ const axis = (chartSize: number) => (col: Column, i: number) => (
       [0, 0],
       [polarToX(col.angle, chartSize / 2), polarToY(col.angle, chartSize / 2)]
     ])}
-    stroke="#555"
-    strokeWidth=".2"
+    stroke="rgba(255,255,255,0.25)"
   />
 );
 

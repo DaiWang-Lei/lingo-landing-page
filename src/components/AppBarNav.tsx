@@ -1,45 +1,77 @@
-import React from 'react'
-import { AppBar, Tabs, Toolbar, Tab, IconButton } from '@material-ui/core'
-import useWindowWidth from '../hooks/useWindowWidth'
+import React, { useState, useCallback } from 'react'
+import { AppBar, Tabs, Toolbar, Tab, IconButton, Drawer, ListItem, List, createMuiTheme, ThemeProvider } from '@material-ui/core'
+import useWindowWidth from '../utils/useWindowWidth'
 import MenuIcon from '@material-ui/icons/Menu';
 
-const AppBarNav: React.FC<{ appBarColor: string, textColor: string, scrollPage: any, page: number }> = (props) => {
+const labels = [
+  "凌高编程",
+  "为何学习",
+  "课程体系",
+  "课程预览",
+  "创始团队"
+];
+
+const darkTheme = createMuiTheme({
+  palette: {
+    type: 'dark',
+  },
+});
+
+const AppBarNav: React.FC<{
+  appBarColor: string,
+  textColor: string,
+  scrollPage: any,
+  page: number
+
+}> = props => {
+
   const windowWidth = useWindowWidth();
+  const [openDrawer, setOpenDrawer] = useState(false);
+
+  const drawerScrollPage = useCallback((i: number) => {
+    props.scrollPage(i);
+    setOpenDrawer(false);
+
+  }, []);
 
   return (
     <AppBar
       position="fixed"
       elevation={0}
-      className="px-10 sm:px-15 md:px-20"
-      style={{
-        backgroundColor: props.appBarColor,
-        color: props.textColor,
-        transition: "all 250ms ease"
-      }}
+      className={"select-none transition-250 change-opacity bg-blur" + ((windowWidth > 1024) ? "" : " px-3")}
+      style={{ backgroundColor: props.appBarColor, color: props.textColor }}
     >
-      <div className="w-full flex justify-center">
-        {windowWidth > 1024 ? (
-          <Toolbar variant="dense" style={{ maxWidth: 1000 }}>
-            <Tabs
-              value={props.page}
-              onChange={(ev, val) => props.scrollPage(val)}
-            >
-              <Tab label="凌高编程" />
-              <Tab label="Why 编程？" />
-              <Tab label="课程体系" />
-              <Tab label="课程预览" />
-              <Tab label="创始团队" />
-            </Tabs>
-          </Toolbar>
-        ) : (
-          <Toolbar variant="dense" style={{ width: "100%", maxWidth: 1000 }}>
+      {windowWidth > 1024 ? (
+        <Toolbar variant="dense" style={{ maxWidth: 1280 }} className="mx-auto">
+          <Tabs
+            value={props.page}
+            onChange={(ev, val) => props.scrollPage(val)}
+          >
+            {labels.map((label, i) => (
+              <Tab label={label} key={i} />
+            ))}
+          </Tabs>
+        </Toolbar>
+      ) : (
+        <>
+          <Toolbar variant="dense" className="w-full" onClick={() => setOpenDrawer(true)}>
             <IconButton>
-              <MenuIcon />
+              <MenuIcon style={{ color: props.textColor, opacity: 0.5 }} />
             </IconButton>
           </Toolbar>
-        )}
-      </div>
-
+          <ThemeProvider theme={darkTheme}>
+            <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)}>
+              <List style={{ width: 200 }}>
+                {labels.map((label, i) => (
+                  <ListItem key={i} button onClick={() => drawerScrollPage(i)}>
+                    {label}
+                  </ListItem>
+                ))}
+              </List>
+            </Drawer>
+          </ThemeProvider>
+        </>
+      )}
     </AppBar>)
 }
 

@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useRef, useEffect, useMemo } from 'react';
 import { Fab } from "@material-ui/core";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import tween from "ambients-tween";
 import tossable from "tossable";
 import { mapRange } from '@lincode/math';
 import { useCallback } from 'react';
+import VisibilityDetector from './VisibilityDetecor';
+//@ts-ignore
+import { tween } from "shifty";
+import useWindowWidth from '../utils/useWindowWidth';
 
 function mapX(x: number): number {
   if (x < 0) return x * mapRange(x, 0, -250, 1, 6)
@@ -16,99 +19,156 @@ function mapZ(z: number): number {
   return mapRange(z, -60, -120, 0, 100)
 }
 
-function mapXMin(x: number) {
-  return -134469900 + (58.8383 + 134469900) / (1 + (x/5150293) ** 0.9473289);
+function index2pos(x: number) {
+  return -53.3 * x - 1;
 }
 
-const CourseCards: React.FC<{ courses: any }> = props => {
-  const [stackX, setStackX] = useState(-50)
-  const [currentCard, setCurrentCard] = useState(0)
+function pos2index(x: number) {
+  return Math.max(Math.round(-0.01875889 * x - 0.01845621), 0);
+}
 
-  const initTouch = useCallback((el: HTMLDivElement | null) => {
-    if (!el) return;
+type Course = {
+  title: string,
+  subtitle: string,
+  content?: string,
+  time?: string,
+  suit?: string,
+  imgSrc?: string
+};
 
-    const handle = tossable({
-      target: el,
-      step: ({ x }) => {
-        setStackX(x - 50)
-        setCurrentCard(Math.max(Math.floor(x / 40 * -0.8), 0))
-      },
-      xMin: mapXMin(props.courses.data.length),
-      xMax: 0,
-      speed: 0.2
-    })
-  }, []);
-
-  //1:0 2:-55 3:108 4:-160 5: -210
+const CourseCards: React.FC<{ dark?: boolean, courses: Array<Course> }> = props => {
+  
+  const containerRef = useRef<any>();
+  const indexRef = useRef(0);
+  const xRef = useRef(0);
+  const cardElements = useMemo(() => new Array<HTMLElement>(), []);
+  const windowWidth = useWindowWidth();
+  const tossableHandleRef = useRef<any>();
 
   const nextCard = useCallback(() => {
-    tween({
-      from: stackX,
-      to: (currentCard + 2) * -52.2,
-      step: setStackX,
-      easing: "ease",
-      duration: 500
-    })
-    setCurrentCard(currentCard + 1)
-  }, [])
+    if (indexRef.current + 1 >= cardElements.length)
+      return;
 
-  const previousCard = useCallback(() => {
     tween({
-      from: stackX,
-      to: currentCard * -52.2,
-      step: setStackX,
-      easing: "ease",
-      duration: 500
-    })
-    setCurrentCard(currentCard - 1)
-  }, [])
+      from: { val: xRef.current },
+      to: { val: index2pos(indexRef.current + 1) },
+      duration: 500,
+      step: (state: any) => tossableHandleRef.current.set(state.val),
+      easing: "easeInOutQuad"
+    });
+    
+  }, []);
+
+  const prevCard = useCallback(() => {
+    if (indexRef.current - 1 < 0)
+      return;
+    
+    tween({
+      from: { val: xRef.current },
+      to: { val: index2pos(indexRef.current - 1) },
+      duration: 500,
+      step: (state: any) => tossableHandleRef.current.set(state.val),
+      easing: "easeInOutQuad"
+    });
+
+  }, []);
+
+  const setCardElement = useCallback((el: HTMLDivElement | null) => {
+    if (el) cardElements.push(el);
+  }, []);
+
+  useEffect(() => {
+    const handle = tossable({
+      touchTarget: containerRef.current,
+      min: index2pos(props.courses.length - 1),
+      max: 0,
+      start: 0,
+      current: () => xRef.current,
+      speed: 0.2,
+      bounceStiffness: 100,
+      step: val => {
+        xRef.current = val;
+        indexRef.current = Math.min(pos2index(val), props.courses.length);
+    
+        const pos = val - 50;
+        for (let i = 0; i < cardElements.length; ++i) {
+          const cardEl = cardElements[i];
+          cardEl.style.transform = `translate3d(${mapX(pos + i * 50)}px, 0px, ${mapZ(pos) - i * 100}px)`;
+        }
+      }
+    });
+
+    tossableHandleRef.current = handle;
+
+    return () => {
+      handle.cancel();
+    };
+  }, []);
 
   const cardHeight = 450;
 
   return (
-    <div className="flex justify-center w-full">
-      <div style={{ width: 295, height: cardHeight }}>
-        <div style={{
-          height: cardHeight - 100,
-          perspective: "1000px",
-          perspectiveOrigin: "500% 50%",
-          marginLeft: 85
-
-        }} ref={initTouch}>
-          {props.courses.data.map((c: any, i: number) => (
-            <div key={i} style={{
-              position: "absolute",
-              transform: `translate3d(${mapX(stackX + i * 50)}px, 0px, ${mapZ(stackX) - i * 100}px)`,
-              zIndex: -i
+    <VisibilityDetector>
+      {visible => (
+        <div className="w-full" ref={containerRef}>
+          <div className="mx-auto" style={{ width: 295, height: cardHeight }}>
+            <div className="transition-1000 change-opacity change-transform" style={{
+              height: cardHeight - 100,
+              perspective: "1000px",
+              perspectiveOrigin: "500% 50%",
+              marginLeft: 85,
+              transform: visible ? "scale(1)" : "scale(0.75)",
+              opacity: visible ? 1 : 0
             }}>
-              <div className="shadow-2xl bg-white p-10 " style={{ width: 295, height: cardHeight }}>
-                <div className="font-bold opacity-50">{c.title}</div>
-                <div className='font-bold text-2xl my-4'>{c.subtitle}</div>
-                <div className="text-sm opacity-75">{c.content}</div>
-                <div className='absolute bottom-0 mb-10 text-blue-700'  >
-                  <div className="text-sm opacity-75  mb-1">{c.time}</div>
-                  <div className="text-sm opacity-75  ">{c.suit}</div>
+              {props.courses.map((c, i) => (
+                <div key={i} ref={setCardElement} style={{
+                  position: "absolute",
+                  zIndex: props.courses.length - i
+                }}>
+                  <div className="shadow-2xl p-10 bg-cover bg-center rounded overflow-hidden text-white" style={{
+                    width: 295,
+                    height: cardHeight,
+                    backgroundImage: c.imgSrc ? `url(${c.imgSrc})` : ""
+                  }}>
+                    <div className="absolute w-full h-full bg-black inset-0" style={{
+                      opacity: props.dark ? 0.5 : 0.1
+                    }} />
+                    <div className="font-bold">{c.title}</div>
+                    <div className='font-bold text-2xl my-4'>{c.subtitle}</div>
+                    <div className="text-sm">{c.content}</div>
+                    <div className='absolute bottom-0 mb-10'  >
+                      <div className="text-sm mb-1">{c.time}</div>
+                      <div className="text-sm ">{c.suit}</div>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
+          </div>
+          <div className="font-normal text-sm opacity-25 text-center text-white mt-5 sm:mt-10">
+            （左右滑动查看）
+          </div>
+          {windowWidth > 640 && (
+            <>
+              <Fab color="primary" onClick={nextCard} style={{
+                position: "absolute",
+                right: '5%',
+                top: '45%'
+              }}>
+                <ArrowForwardIcon />
+              </Fab>
+              <Fab color="primary" onClick={prevCard} style={{
+                position: "absolute",
+                left: '5%',
+                top: '45%'
+              }} >
+                <ArrowBackIcon />
+              </Fab>
+            </>
+          )}
         </div>
-      </div>
-      <Fab color="primary" aria-label="add" onClick={nextCard} style={{
-        position: "absolute",
-        right: '5%',
-        top: '45%'
-      }}>
-        <ArrowForwardIcon />
-      </Fab>
-      <Fab color="primary" aria-label="add" onClick={previousCard} style={{
-        position: "absolute",
-        left: '5%',
-        top: '45%'
-      }} >
-        <ArrowBackIcon />
-      </Fab>
-    </div>
+      )}
+    </VisibilityDetector>
   )
 };
 export default CourseCards;
