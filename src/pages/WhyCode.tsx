@@ -41,7 +41,7 @@ const WhyCode: React.FC<{ pageRef: any, bgColor: string, textColor: string }> = 
            className="text-2xl sm:text-3xl xl:text-4xl mb-10 font-bold lg:text-right text-center transition-1000 change-opacity"
            style={{ color: props.textColor }}
           >
-            学习编程，构建核心竞争力
+            学编程，构建核心竞争力
           </h2>
           
           <div className="sm:flex items-center mb-2">

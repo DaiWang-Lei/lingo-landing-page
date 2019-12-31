@@ -97,7 +97,7 @@ const Mountain3D: React.FC<{ currentPage: number }> = props => {
 
     return (
         <div className="w-full flex justify-center">
-            <div ref={playerContainerRef} style={{ minWidth: 700 }}>
+            <div className="pointer-events-none" ref={playerContainerRef} style={{ minWidth: 700 }}>
                 <ReactResizeDetector handleWidth handleHeight onResize={onResize} />
                 <img src={ipadSrc} className="mt-40 lg:mt-64" style={{ transform: "translateY(-10%)" }} />
             </div>
