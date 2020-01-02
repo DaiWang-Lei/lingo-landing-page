@@ -55,7 +55,7 @@ const Founders: React.FC<{ pageRef: any, bgColor: string, textColor: string }> =
 
       <div className='text-sm text-center text-white mt-24 pb-10'>
         <p className="opacity-50">
-          上海薛来网络科技有限公司  © 2019 版权所有
+          上海薛来网络科技有限公司  © 2020 版权所有
         </p>
         <p className="opacity-50">
           沪 ICP 备 19039915 号
