@@ -2,7 +2,7 @@ import React from "react";
 
 const NameCard: React.FC<{ name: string, position: string, imgSrc: string }> = props => {
     return (
-        <div className="md:flex mx-auto mt-10" style={{ maxWidth: 640 }}>
+        <div className="md:flex mx-auto mt-24 sm:mt-10" style={{ maxWidth: 640 }}>
             <img
              className="w-24 h-24 rounded-full mx-auto md:mx-0 md:mr-6 border-4 border-white mb-3 md:mb-0"
              src={props.imgSrc}
