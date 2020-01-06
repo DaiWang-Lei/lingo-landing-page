@@ -5,14 +5,14 @@ import Mountain3D from '../components/Mountain3D'
 const Title: React.FC<{ bgColor: string, pageRef: any, currentPage: number }> = props => { 
   return (
     <Page
-     background2="linear-gradient(to bottom, rgb(255,177,145), rgb(255,153,111), rgb(66,147,255))"
+     background2="linear-gradient(to bottom, rgb(127,183,207), rgb(127,183,207), rgb(66,147,255))"
      background={props.bgColor}
      pageRef={props.pageRef}
     >
       <div style={{ maxWidth: 640 }} className="text-left md:text-center mx-auto mb-16">
         <h1 className="text-4xl md:text-5xl font-bold mb-3 text-center">
           <span className="inline-block whitespace-no-wrap text-center">
-            凌高编程，
+            凌高编程 &nbsp;&nbsp;
           </span>
           <span className="inline-block whitespace-no-wrap text-center">
             赋能你的创造力

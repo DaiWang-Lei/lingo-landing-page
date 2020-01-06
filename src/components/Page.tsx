@@ -23,7 +23,7 @@ const Page: React.FC<{
       backgroundPosition: "center"
      }}>
       {props.insert}
-      <div className="w-full transition-1000 change-opacity py-32" style={{
+      <div className="w-full transition-1000 change-opacity sm:py-32 py-20 " style={{
         background: props.background ?? "none",
         backgroundSize: "cover",
         backgroundPosition: "center",
