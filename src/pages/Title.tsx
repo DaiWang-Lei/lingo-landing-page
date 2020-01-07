@@ -1,8 +1,11 @@
 import React from 'react'
 import Page from '../components/Page'
 import Mountain3D from '../components/Mountain3D'
+import useWindowWidth from '../utils/useWindowWidth'
 
 const Title: React.FC<{ bgColor: string, pageRef: any, currentPage: number }> = props => { 
+  const windowWidth = useWindowWidth();
+
   return (
     <Page
      background2="linear-gradient(to bottom, rgb(127,183,207), rgb(127,183,207), rgb(66,147,255))"
@@ -26,16 +29,27 @@ const Title: React.FC<{ bgColor: string, pageRef: any, currentPage: number }> = 
             AI在线编程平台 (8-18岁)
           </span>
         </h2>
-        <div className="text-sm opacity-75 text-center sm:text-left">
-          <span className="block sm:inline-block">每个孩子天生都充满创造力，</span> 
-          <span className="block sm:inline-block">他们的想象力与好奇心会，</span>
-          <span className="block sm:inline-block">编绘出绚丽多彩的独特世界。</span>
-          <span className="block sm:inline-block">凌高编程希望将孩子的奇思妙想，</span>
-          <span className="block sm:inline-block">通过编程这一工具自由表达出来并分享。</span>
-          <span className="block sm:inline-block">凌高希望滋养每一个孩子的探索力和创造力。</span>
-          <span className="block sm:inline-block">以科技表达自我，将梦想编程现实，</span>
-          <span className="block sm:inline-block">用想法改变世界。</span>
-        </div>
+        {windowWidth > 640 ? (
+          <div className="text-sm opacity-75 text-left">
+            <span>每个孩子天生都充满创造力，</span> 
+            <span>他们的想象力与好奇心，</span>
+            <span>会编绘出绚丽多彩的世界。</span>
+            <span>LINGO希望将孩子的奇思妙想，</span>
+            <span>通过编程自由表达出来并分享。</span>
+            <span>以科技表达自我，将梦想编程现实，</span>
+            <span>用想法改变世界。</span>
+          </div>
+        ) : (
+          <div className="text-sm opacity-75 text-center">
+            <span className="block">每个孩子天生都充满创造力，</span> 
+            <span className="block">他们的想象力与好奇心，</span>
+            <span className="block">会编绘出绚丽多彩的世界。</span>
+            <span className="block">LINGO希望将孩子的奇思妙想，</span>
+            <span className="block">通过编程自由表达出来并分享。</span>
+            <span className="block">以科技表达自我，将梦想编程现实，</span>
+            <span className="block">用想法改变世界。</span>
+          </div>
+        )}
       </div>
       <Mountain3D currentPage={props.currentPage} />
     </Page>

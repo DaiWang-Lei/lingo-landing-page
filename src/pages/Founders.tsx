@@ -52,15 +52,8 @@ const Founders: React.FC<{ pageRef: any, bgColor: string, textColor: string }> =
           佐治亚理工大学航天工程设计实验室（Aerospace Systems Design Laboratory）<NB>研究员</NB>
         </div>
       </NameCard>
-
-      <div className='text-sm text-center text-white mt-24 pb-10'>
-        <p className="opacity-50">
-          上海薛来网络科技有限公司  © 2020 版权所有
-        </p>
-        <p className="opacity-50">
-          沪 ICP 备 19039915 号
-        </p>
-      </div>
+      <div className='mt-24 pb-10'/>
+      
     </Page>
   )
 }

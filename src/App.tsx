@@ -9,6 +9,7 @@ import WhyCode from "./pages/WhyCode";
 import AppBarNav from "./components/AppBarNav";
 import VisibilityDetector from "./components/VisibilityDetecor";
 import store from "./utils/store";
+import Faq from "./pages/Faq";
 
 export const useIsLoaded = store(false);
 
@@ -73,6 +74,12 @@ const App: React.FC = () => {
     textColor = "white";
     appBarColor = "rgba(39, 52, 65, 0.75)";
   }
+  else if (page === 7) {
+    bgColor = "rgba(29,28,51,0.75)";
+    textColor = "white";
+    appBarColor = "rgba(39, 52, 65, 0.75)";
+  }
+
 
   const scrollPage = useCallback((tabIndex: number) => {
     let top = 0;
@@ -105,7 +112,8 @@ const App: React.FC = () => {
           <CoreCourses textColor={textColor} pageRef={coreCoursesRef} bgColor={bgColor} />,
           <AdvancedCourses textColor={textColor} bgColor={bgColor} />,
           <CoursePreview bgColor={bgColor} textColor={textColor} pageRef={coursePreviewRef} />,
-          <Founders pageRef={foundersRef} bgColor={bgColor} textColor={textColor} />
+          <Founders pageRef={foundersRef} bgColor={bgColor} textColor={textColor} />,
+          <Faq textColor={textColor} bgColor={bgColor} />
         ] : [])
 
       ].map((PageComponent, i) => (
