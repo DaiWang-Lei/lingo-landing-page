@@ -8,7 +8,8 @@ const Title: React.FC<{ bgColor: string, pageRef: any, currentPage: number }> = 
 
   return (
     <Page
-     background2="linear-gradient(to bottom, rgb(127,183,207), rgb(127,183,207), rgb(66,147,255))"
+     background2="linear-gradient(to bottom, rgb(153,204,255), rgb(153,204,255)
+     , rgb(66,147,255))"
      background={props.bgColor}
      pageRef={props.pageRef}
     >

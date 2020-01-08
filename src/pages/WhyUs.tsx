@@ -41,13 +41,13 @@ const WhyUs: React.FC<{ bgColor: any, pageRef: any }> = props => {
         </Card>
         <Card
           title={cardInfo[1].title}
-          background="linear-gradient(45deg, rgb(0,227,168) 0%, rgb(96,134,235) 100%)"
+          background="linear-gradient(45deg, rgb(100,78,212)0%, rgb(56, 6, 92) 100%)"
         >
          {cardInfo[1].info}
         </Card>
         <Card
           title={cardInfo[2].title}
-          background="linear-gradient(45deg, rgb(100,78,212) 0%, rgb(56, 6, 92) 100%)"
+          background="linear-gradient(45deg, rgb(0,227,168) 0%, rgb(96,134,235)   100%)"
         >
           {cardInfo[2].info}
         </Card>

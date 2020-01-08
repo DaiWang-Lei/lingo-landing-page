@@ -42,7 +42,7 @@ const App: React.FC = () => {
 
   let bgColor = "transparent";
   let textColor = "black";
-  let appBarColor = "rgba(127,183,207, 0.75)";
+  let appBarColor = "rgba(153,204,255, 0.75)";
 
   if (page === 1) {
     bgColor = "rgb(29,28,51)";

@@ -14,7 +14,7 @@ const Card: React.FC<{
       <VisibilityDetector topOnly>
         {visible => (
           <div
-           className={`w-full rounded h-full mx-auto transition-500 change-transform change-opacity`}
+           className={`w-full rounded-lg overflow-hidden h-full mx-auto transition-500 change-transform change-opacity`}
            style={{
             maxWidth: 300,
             minHeight: 400,
@@ -23,10 +23,10 @@ const Card: React.FC<{
             background
           }}>
             <div className="w-full text-right">
-              <img src={cardSrc} width="50%" className="inline-block" />
+              <img src={cardSrc} width="70%" className="inline-block" />
             </div>
             <div className="w-full p-6">
-              <div className="text-base xl:text-lg font-bold mb-3 text-center">
+              <div className="text-base xl:text-lg font-bold mb-3 mt-7 text-center">
                 {title}
               </div>
               <div className="opacity-75">
