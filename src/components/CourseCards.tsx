@@ -36,8 +36,13 @@ type Course = {
   imgSrc?: string
 };
 
-const CourseCards: React.FC<{ dark?: boolean, courses: Array<Course> }> = props => {
-  
+const CourseCards: React.FC<{
+  dark?: boolean,
+  courses: Array<Course>
+  isAdvanced?: boolean
+
+}> = props => {
+
   const containerRef = useRef<any>();
   const indexRef = useRef(0);
   const xRef = useRef(0);
@@ -56,13 +61,13 @@ const CourseCards: React.FC<{ dark?: boolean, courses: Array<Course> }> = props 
       step: (state: any) => tossableHandleRef.current.set(state.val),
       easing: "easeInOutQuad"
     });
-    
+
   }, []);
 
   const prevCard = useCallback(() => {
     if (indexRef.current - 1 < 0)
       return;
-    
+
     tween({
       from: { val: xRef.current },
       to: { val: index2pos(indexRef.current - 1) },
@@ -89,7 +94,7 @@ const CourseCards: React.FC<{ dark?: boolean, courses: Array<Course> }> = props 
       step: val => {
         xRef.current = val;
         indexRef.current = Math.min(pos2index(val), props.courses.length);
-    
+
         const pos = val - 50;
         for (let i = 0; i < cardElements.length; ++i) {
           const cardEl = cardElements[i];
@@ -136,10 +141,16 @@ const CourseCards: React.FC<{ dark?: boolean, courses: Array<Course> }> = props 
                     <div className="font-bold">{c.title}</div>
                     <div className='font-bold text-2xl my-4'>{c.subtitle}</div>
                     <div className="text-sm">{c.content}</div>
-                    <div className='absolute bottom-0 mb-10'  >
-                      <div className="text-sm mb-1">{c.time}</div>
-                      <div className="text-sm ">{c.suit}</div>
-                    </div>
+                    {props.isAdvanced ? (
+                      <div className='absolute bottom-0 mb-10'  >
+                        <div className="text-sm opacity-50">即将发布 敬请期待</div>
+                      </div>
+                    ) : (
+                      <div className='absolute bottom-0 mb-10'  >
+                        <div className="text-sm mb-1">{c.time}</div>
+                        <div className="text-sm ">{c.suit}</div>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}

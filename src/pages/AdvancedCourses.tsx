@@ -15,7 +15,7 @@ import iotSrc from "../assets/iot.jpg";
 import fuiSrc from "../assets/fui.jpg";
 
 const courses = [
-  { title: "ADVANCED 1", subtitle: "VR与空间编程", imgSrc: vrSrc  },
+  { title: "ADVANCED 1", subtitle: "VR与空间编程", imgSrc: vrSrc },
   { title: "ADVANCED 2", subtitle: "AI算法入门", imgSrc: aiSrc },
   { title: "ADVANCED 3", subtitle: "智能机器人课程", imgSrc: bionicSrc },
   { title: "ADVANCED 4", subtitle: "网络编程", imgSrc: networkSrc },
@@ -44,7 +44,7 @@ const AdvancedCourses: React.FC<{bgColor: any, textColor:any}> = props => {
           ADVANCED 1 - 5
         </span>
       </h2>
-      <CourseCards courses={courses} dark />
+      <CourseCards courses={courses} dark isAdvanced />
     </Page>
   )
 }

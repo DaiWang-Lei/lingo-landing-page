@@ -32,8 +32,7 @@ const faq = [{
   anwser: '1. 设备：需准备Windows7及以上版本的电脑，要求4GB运行内存，1GB以上硬盘空间，或者Mac OS X10.10及以上版本的苹果电脑。',
   anwser1: '2.辅助设备：建议配备头戴式耳机，辅助隔音自主学习。',
   anwser2:'3.关注微信公众号“LINGO凌高编程创造营”，注册成为用户后即可获得一节免费体验课。'
-}
-]
+}]
 
 
 const Faq: React.FC<{ bgColor: any, textColor: any }> = props => {

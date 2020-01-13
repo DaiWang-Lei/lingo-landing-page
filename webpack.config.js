@@ -160,7 +160,7 @@ module.exports = (env, argv) => ({
             bodyHtmlSnippet: `
 				<div
 				 id="preload"
-				 style="z-index: 99999; background: rgb(0,126,188); width: 100vw; height:100vh; position: fixed; display: flex; align-items: center; justify-content: center; left: 0px; top: 0px;"
+				 style="z-index: 99999; background: #48b7fd; width: 100vw; height:100vh; position: fixed; display: flex; align-items: center; justify-content: center; left: 0px; top: 0px;"
 				>
 					<style>
 						.sk-chase {
