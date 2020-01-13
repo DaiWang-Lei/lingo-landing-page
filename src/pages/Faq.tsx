@@ -16,7 +16,7 @@ const faq = [{
   id: 0,
   question: '凌高编程与Scratch编程有什么不同?',
   anwser: 'Scratch图形化编程侧重低幼龄的儿童编程思维和逻辑的起步学习，功能单一，并非真正的代码编程，对于孩子日后学习Python，C++等编程语言帮助有限；',
-  anwser1: '相比之下，Scratch如同“编程模拟舱”，而凌高编程推出的LingoScript语言则更像一架操作环境真实的“编程教练机”。我们采用的文字编程和语法更加接近现代程序语言，并且可以无缝对接Python和Javascript的生态系统，是孩子更容易学会的“真编程”。'
+  anwser1: '相比之下，Scratch如同“编程模拟舱”，而凌高编程推出的LingoScript语言则更像一架操作环境真实的“编程教练机”。我们采用的代码编程和语法更加接近现代程序语言，并且可以无缝对接Python和Javascript的生态系统，是孩子更容易学会的“真编程”。'
 }, {
   id: 1,
   question: '我孩子上幼儿园大班，可以来学习吗？',
@@ -26,11 +26,13 @@ const faq = [{
   question: '学了凌高编程，可以参加什么比赛？',
   anwser: '凌高编程非常注重编程学习的“应用性”，每个学员在融会贯通核心基础课后所创作的作品即可达到国际竞赛级水平，如果愿意往编程方向进行更加深远的探索与发展，作品可以投入国家级竞赛《全国青少年科技创新大赛》，《全国青少年电子信息智能创新大赛》以及国际级的全球青少年科学竞赛ISEF(国际科学与工程大奖赛)等的选拔。希望我们的孩子能在编程学习这条路上走得更远，在学习、竞技的过程中遇到更多志同道合的伙伴。'
 },
-  // }, {
-  //   id: 3,
-  //   question: '',
-  //   anwser: ''
-  // }
+{
+  id: 3,
+  question: '课前需要做哪些准备？',
+  anwser: '1. 设备：需准备Windows7及以上版本的电脑，要求4GB运行内存，1GB以上硬盘空间，或者Mac OS X10.10及以上版本的苹果电脑。',
+  anwser1: '2.辅助设备：建议配备头戴式耳机，辅助隔音自主学习。',
+  anwser2:'3.关注微信公众号“LINGO凌高编程创造营”，注册成为用户后即可获得一节免费体验课。'
+}
 ]
 
 
@@ -56,6 +58,7 @@ const Faq: React.FC<{ bgColor: any, textColor: any }> = props => {
                 </h3>
                 <h4 className='mb-1 text-sm opacity-75'>{v.anwser}</h4>
                 <h4 className='text-sm opacity-75'>{v.anwser1}</h4>
+                <h4 className='text-sm opacity-75'>{v.anwser2}</h4>
               </div>
             ))}
           </div>

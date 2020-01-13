@@ -1,19 +1,21 @@
 import React from 'react'
 import Page from '../components/Page'
 import Mountain3D from '../components/Mountain3D'
-import useWindowWidth from '../utils/useWindowWidth'
+import useWindowWidth from '../utils/useWindowWidth';
+
+
 
 const Title: React.FC<{ bgColor: string, pageRef: any, currentPage: number }> = props => { 
   const windowWidth = useWindowWidth();
 
   return (
     <Page
-     background2="linear-gradient(to bottom, rgb(153,204,255), rgb(153,204,255)
+     background2="linear-gradient(to bottom, rgb(72,183,253), rgb(72,183,253)
      , rgb(66,147,255))"
      background={props.bgColor}
      pageRef={props.pageRef}
     >
-      <div style={{ maxWidth: 640 }} className="text-left md:text-center mx-auto mb-16">
+     <div style={{ maxWidth: 640 }} className="text-left md:text-center mx-auto mb-16 text-white">
         <h1 className="text-4xl md:text-5xl font-bold mb-3 text-center">
           <span className="inline-block whitespace-no-wrap text-center">
             凌高编程 &nbsp;&nbsp;

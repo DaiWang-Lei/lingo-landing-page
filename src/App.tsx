@@ -41,8 +41,8 @@ const App: React.FC = () => {
     tabIndex = 4;
 
   let bgColor = "transparent";
-  let textColor = "black";
-  let appBarColor = "rgba(153,204,255, 0.75)";
+  let textColor = "white";
+  let appBarColor = "rgba(72,183,253, 0.75)";
 
   if (page === 1) {
     bgColor = "rgb(29,28,51)";
